@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ORVBA | Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="dashboard.js" defer></script>
+
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+
+    <header class="navbar">
+
+        <a href="dashboard.html" class="logo">
+            ORV<span>BA</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="vehicle.html">My Vehicle</a>
+            <a href="request.html">Get Assistance</a>
+
+            <a href="../index.html" class="logout-btn"
+               onclick="return logoutUser()">
+                Logout
+            </a>
+        </nav>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- WELCOME SECTION -->
+
+        <section class="welcome">
+
+            <div class="welcome-content">
+
+                <span class="welcome-label">
+                    YOUR PERSONAL DASHBOARD
+                </span>
+<h1>
+    Welcome back, <span id="userName">there</span>! 👋
+    <br>
+    We're here to <span>keep you moving.</span>
+</h1>
+
+                <p>
+                    Vehicle trouble can happen anytime.
+                    Get the assistance you need, manage your vehicle
+                    details, and check your recent service requests
+                    all in one place.
+                </p>
+
+                <div class="button-wrap">
+
+                    <a href="request.html" class="gradient-button">
+
+                        <span class="button-inner">
+                            <span>Let's get started</span>
+
+                            <span class="button-arrow">›</span>
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="welcome-icon">
+                🚗
+            </div>
+
+        </section>
+
+
+        <!-- DASHBOARD OPTIONS -->
+
+        <section>
+
+            <div class="section-heading">
+
+                <h2>What would you like to do?</h2>
+
+                <p>
+                    Choose an option to manage your vehicle assistance.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+                <!-- VEHICLE DETAILS -->
+
+                <article class="card">
+
+                    <div class="card-icon blue-icon">
+                        🚘
+                    </div>
+
+                    <h3>Vehicle Details</h3>
+
+                    <p>
+                        View or update your vehicle information.
+                        Keep your vehicle details ready for
+                        a faster assistance process.
+                    </p>
+                    <p id="vehicleCount" style="font-weight: bold; color: #208bc2;">
+    Loading your vehicles...
+</p>
+
+                    <div class="button-wrap">
+
+                        <a href="vehicle.html" class="gradient-button">
+
+                            <span class="button-inner">
+                                <span>Vehicle Details</span>
+                                <span class="button-arrow">›</span>
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- REQUEST ASSISTANCE -->
+
+                <article class="card">
+
+                    <div class="card-icon cyan-icon">
+                        🛠️
+                    </div>
+
+                    <h3>Request Assistance</h3>
+
+                    <p>
+                        Experiencing a breakdown?
+                        Raise a service request to get help
+                        when you need it.
+                    </p>
+
+                    <div class="button-wrap">
+
+                        <a href="request.html" class="gradient-button">
+
+                            <span class="button-inner">
+                                <span>Request Help</span>
+                                <span class="button-arrow">›</span>
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PREVIOUS HISTORY -->
+
+                <article class="card">
+
+                    <div class="card-icon purple-icon">
+                        📋
+                    </div>
+
+                    <h3>Previous History</h3>
+
+                    <p>
+                        Check the status and progress of
+                        your most recently raised
+                        breakdown assistance request.
+                    </p>
+
+                    <div class="button-wrap">
+
+                        <a href="request-status.html"
+                           class="gradient-button">
+
+                            <span class="button-inner">
+                                <span>View Last Request</span>
+                                <span class="button-arrow">›</span>
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- LAST REQUEST SHORTCUT -->
+
+        <section class="history">
+
+            <div>
+
+                <h3>Looking for your last request?</h3>
+
+                <p>
+                    Check your most recent service request
+                    and see its current status on the request
+                    tracking page.
+                </p>
+
+                <span class="history-status">
+                    ✓ Request tracking available
+                </span>
+
+            </div>
+
+            <div class="button-wrap">
+
+                <a href="request-status.html" class="gradient-button">
+
+                    <span class="button-inner">
+                        <span>Check Request Status</span>
+                        <span class="button-arrow">›</span>
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        © 2026 <span>ORVBA</span> — On-Road Vehicle Breakdown Assistance
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+
+</body>
+</html>

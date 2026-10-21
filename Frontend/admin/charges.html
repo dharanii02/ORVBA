@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charge Review | ORVBA Admin</title>
+<style>
+:root{--navy:#101b3b;--blue:#356dff;--cyan:#37c9e8;--bg:#f4f7fc;--text:#1b2540;--muted:#71809c;--line:#e5eaf3;--white:#fff;--green:#138a61;--amber:#a86a0a;--red:#c43d52;--shadow:0 12px 32px rgba(24,41,82,.07)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.sidebar{position:fixed;inset:0 auto 0 0;width:250px;background:linear-gradient(175deg,var(--navy),#0b142d);padding:25px 16px;color:#fff;display:flex;flex-direction:column;z-index:10}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px 28px;border-bottom:1px solid #ffffff18}
+.brand-mark{height:42px;width:42px;border-radius:13px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;font-weight:900;font-size:18px}
+.brand strong{font-size:17px;letter-spacing:.3px}
+.brand small{display:block;color:#a9b8d7;font-size:11px;margin-top:4px}
+.nav-label{font-size:10px;letter-spacing:1.7px;color:#7f91b7;margin:25px 12px 10px}
+.nav{display:grid;gap:6px}
+.nav a{display:flex;gap:12px;align-items:center;text-decoration:none;color:#b7c3dc;padding:12px 13px;border-radius:11px;font-size:13px;transition:.2s}
+.nav a:hover,.nav a.active{background:#ffffff13;color:#fff}
+.nav a.active{box-shadow:inset 3px 0 var(--cyan)}
+.nav .ico{width:20px;text-align:center;font-size:16px}
+.side-bottom{margin-top:auto;padding:15px 12px;border-radius:12px;background:#ffffff0d;color:#aab8d3;font-size:12px;line-height:1.6}
+.side-bottom strong{color:white;display:block;margin-bottom:4px}
+.main{margin-left:250px;padding:27px 34px 40px;max-width:1600px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);font-weight:800}
+.topbar h1{margin:6px 0 0;font-size:27px;letter-spacing:-.7px}
+.profile{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:13px}
+.avatar{width:34px;height:34px;border-radius:10px;background:#e7efff;color:var(--blue);display:grid;place-items:center;font-weight:800}
+.profile strong{font-size:12px;display:block}
+.profile small{font-size:11px;color:var(--muted)}
+.title-row{display:flex;align-items:center}
+.mobile-menu{display:none}
+.hero{background:linear-gradient(115deg,#172b59,#234a91 65%,#1b8ca9);color:#fff;padding:26px 28px;border-radius:20px;position:relative;overflow:hidden;box-shadow:var(--shadow);margin-bottom:22px}
+.hero:after{content:"";position:absolute;width:240px;height:240px;border:1px solid #ffffff20;border-radius:50%;right:35px;top:-110px;box-shadow:0 0 0 28px #ffffff08,0 0 0 58px #ffffff06}
+.hero h2{margin:0 0 9px;font-size:23px;position:relative;z-index:1}
+.hero p{margin:0;color:#d4e1ff;font-size:13px;max-width:700px;line-height:1.7;position:relative;z-index:1}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:22px}
+.stat,.panel{background:#fff;border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}
+.stat{padding:19px}
+.stat-top{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:12px}
+.stat-icon{height:35px;width:35px;border-radius:11px;background:#edf3ff;display:grid;place-items:center;color:var(--blue);font-size:17px}
+.stat strong{display:block;font-size:28px;margin-top:12px;letter-spacing:-.7px}
+.stat small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+.panel{padding:22px}
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px}
+.panel h3{font-size:16px;margin:0}
+.sub{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.field{width:100%;border:1px solid #dfe6f1;background:#fff;border-radius:10px;padding:11px 12px;outline:none;color:var(--text);font-size:12px}
+.field:focus{border-color:#83a4ff;box-shadow:0 0 0 3px #356dff12}
+.search{flex:1;min-width:190px}
+.select{min-width:155px;width:auto}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th{text-align:left;background:#f8faff;color:#7b88a2;font-size:10px;text-transform:uppercase;letter-spacing:.7px;padding:13px 12px;white-space:nowrap}
+td{padding:15px 12px;border-bottom:1px solid #edf0f6;font-size:12px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+.request-id{font-weight:800;color:#315dc8}
+.cell-main{font-weight:750;font-size:12px}
+.cell-sub{font-size:10px;color:var(--muted);margin-top:5px}
+.pill{display:inline-flex;align-items:center;gap:5px;border-radius:30px;padding:6px 9px;font-size:10px;font-weight:800;white-space:nowrap}
+.pill.rejected{background:#fff0f2;color:var(--red)}
+.pill.approved{background:#e5f8f0;color:var(--green)}
+.pill.pending{background:#fff5df;color:#a86a0a}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:750;transition:.2s}
+.btn-primary{color:#fff;background:linear-gradient(110deg,var(--blue),#418bff);box-shadow:0 6px 14px #356dff25}
+.btn-soft{background:#edf3ff;color:#2855bb}
+.btn-outline{border:1px solid var(--line);background:#fff;color:#52617c}
+.icon-btn{border:1px solid var(--line);background:#fff;color:#52617c;border-radius:8px;padding:7px 9px;font-size:11px}
+.icon-btn:hover{background:#f2f6ff}
+.empty{text-align:center;color:var(--muted);padding:25px}
+.demo-note{display:flex;gap:11px;align-items:flex-start;background:#fff8e9;border:1px solid #f5e6bd;padding:14px;border-radius:13px;font-size:11px;line-height:1.6;color:#8a641f;margin-bottom:18px}
+.demo-note strong{display:block;margin-bottom:3px}
+.footer-note{font-size:11px;color:var(--muted);text-align:center;margin:18px 0 0}
+.modal-backdrop{position:fixed;inset:0;background:#0a153b70;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}
+.modal-backdrop.show{display:flex}
+.modal{background:#fff;width:min(560px,100%);border-radius:18px;padding:24px;box-shadow:0 20px 70px #0b183b40;max-height:90vh;overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-head h3{margin:0}
+.close{border:0;background:#f1f4fa;border-radius:9px;width:34px;height:34px;font-size:18px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.detail{padding:13px;border:1px solid var(--line);border-radius:12px;background:#fbfcff}
+.detail label{font-size:10px;color:var(--muted);display:block;margin-bottom:6px}
+.detail strong{font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.detail.full{grid-column:1/-1}
+.modal-actions{display:flex;gap:9px;margin-top:20px;flex-wrap:wrap}
+.toast{position:fixed;right:24px;bottom:24px;background:#14264e;color:#fff;padding:13px 18px;border-radius:12px;box-shadow:var(--shadow);font-size:12px;z-index:30;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s}
+.toast.show{opacity:1;transform:translateY(0)}
+.sidebar-backdrop{display:none}
+@media(max-width:1150px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.main{padding:24px}}
+@media(max-width:760px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.sidebar-backdrop.show{display:block;position:fixed;inset:0;background:#08132d80;z-index:9}.main{margin-left:0;padding:18px 14px 30px}.topbar{align-items:flex-start}.topbar h1{font-size:23px}.profile{display:none}.mobile-menu{display:inline-grid;place-items:center;width:40px;height:40px;border:1px solid var(--line);background:#fff;border-radius:11px;margin-right:10px}.hero{padding:22px}.hero h2{font-size:20px}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:24px}.panel{padding:16px}.panel-head{flex-direction:column}.detail-grid{grid-template-columns:1fr}.detail.full{grid-column:auto}}
+@media(max-width:420px){.stats{grid-template-columns:1fr 1fr}.stat-top{font-size:10px}.stat-icon{height:30px;width:30px}.hero p{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar(false)"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="brand-mark">O</div><div><strong>ORVBA</strong><small>ADMIN CONTROL CENTER</small></div></div>
+  <div class="nav-label">WORKSPACE</div>
+  <nav class="nav">
+    <a href="dashboard.html"><span class="ico">▦</span>Dashboard</a>
+    <a href="mechanics.html"><span class="ico">♙</span>Mechanics</a>
+    <a href="services.html"><span class="ico">⚙</span>Services &amp; Pricing</a>
+    <a href="requests.html"><span class="ico">▤</span>Service Requests</a>
+    <a class="active" href="charges.html"><span class="ico">₹</span>Charge Review</a>
+  </nav>
+  <div class="nav-label">ACCOUNT</div>
+  <nav class="nav"><a href="#" onclick="logout();return false"><span class="ico">↪</span>Logout</a></nav>
+  <div class="side-bottom"><strong>Every charge matters.</strong>Review proposed repair costs and approve quotations before work proceeds.</div>
+</aside>
+
+<main class="main">
+  <header class="topbar">
+    <div class="title-row"><button class="mobile-menu" onclick="toggleSidebar(true)" aria-label="Open menu">☰</button><div><div class="eyebrow">Admin workspace / Operations</div><h1>Charge Review</h1></div></div>
+    <div class="profile"><div class="avatar">A</div><div><strong id="adminName">Administrator</strong><small>System admin</small></div></div>
+  </header>
+
+  <section class="hero">
+    <h2>Review quotations before repair begins.</h2>
+    <p>Check the mechanic's proposed charge, understand the reason for the estimate, and approve or reject the amount. Request tracking remains available on the Service Requests page.</p>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><div class="stat-top">Pending reviews <span class="stat-icon">◷</span></div><strong id="pendingCount">0</strong><small>Quotations awaiting your decision</small></div>
+    <div class="stat"><div class="stat-top">Approved <span class="stat-icon">✓</span></div><strong id="approvedCount">0</strong><small>Admin-reviewed quotations</small></div>
+    <div class="stat"><div class="stat-top">Rejected <span class="stat-icon">×</span></div><strong id="rejectedCount">0</strong><small>Admin-rejected quotations</small></div>
+    <div class="stat"><div class="stat-top">Pending amount <span class="stat-icon">₹</span></div><strong id="pendingAmount">₹0</strong><small>Total value awaiting review</small></div>
+  </section>
+
+  <div class="demo-note"><span>ⓘ</span><div><strong>Live backend connection</strong>Only quotations flagged for admin review are shown here. Approving or rejecting a quotation updates the backend.</div></div>
+
+  <section class="panel">
+    <div class="panel-head"><div><h3>All quotation requests</h3><div class="sub">Search by request ID, customer, mechanic or service. Open a quotation to review its details.</div></div><button class="btn btn-outline" onclick="loadCharges()">Refresh reviews</button></div>
+    <div class="toolbar"><input id="searchInput" class="field search" placeholder="Search quotations…"><select id="statusFilter" class="field select"><option value="all">All statuses</option><option value="PENDING">Pending review</option><option value="APPROVED">Approved</option><option value="REJECTED">Rejected</option></select></div>
+    <div class="table-wrap"><table><thead><tr><th>Request</th><th>Customer</th><th>Mechanic</th><th>Service / Reason</th><th>Proposed charge</th><th>Status</th><th>Review</th></tr></thead><tbody id="chargesBody"></tbody></table></div>
+    <div class="footer-note">Use this page for quotation amount decisions. Use Service Requests for request tracking.</div>
+  </section>
+</main>
+
+<div class="modal-backdrop" id="chargeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head"><div><h3 id="modalTitle">Quotation details</h3><div class="sub">Review the proposed service charge</div></div><button class="close" onclick="closeModal()" aria-label="Close">×</button></div>
+    <div class="detail-grid" id="detailGrid"></div>
+    <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const API_BASE_URL = "http://localhost:8080";
+let charges = [];
+let toastTimer;
+const $ = id => document.getElementById(id);
+
+const statusLabels = {
+    PENDING: "Pending review",
+    APPROVED: "Approved",
+    REJECTED: "Rejected"
+};
+const statusClasses = { PENDING: "pending", APPROVED: "approved", REJECTED: "rejected" };
+
+function getToken() {
+    return sessionStorage.getItem("orvbaToken") || localStorage.getItem("orvbaToken");
+}
+function authHeaders(json = false) {
+    const headers = {};
+    const token = getToken();
+    if (token) headers.Authorization = "Bearer " + token;
+    if (json) headers["Content-Type"] = "application/json";
+    return headers;
+}
+function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[character]);
+}
+function currency(value) {
+    const amount = Number(value);
+    return new Intl.NumberFormat("en-IN", {
+        style: "currency", currency: "INR", maximumFractionDigits: 2
+    }).format(Number.isFinite(amount) ? amount : 0);
+}
+function firstValue(...values) {
+    return values.find(v => v !== undefined && v !== null && v !== "");
+}
+function nestedName(value, ...keys) {
+    if (value == null) return "";
+    if (typeof value !== "object") return String(value);
+    for (const key of keys) if (value[key] != null && value[key] !== "") return value[key];
+    return "";
+}
+function normalizeRequest(r) {
+    const user = r.user || r.customer || r.requestedBy || {};
+    const mechanic = r.mechanic || r.assignedMechanic || {};
+    const service = r.service || r.serviceType || {};
+    const id = firstValue(r.requestId, r.id, r.serviceRequestId);
+    const rawStatus = String(firstValue(r.status, r.requestStatus, "ADMIN_REVIEW")).toUpperCase();
+    let status = rawStatus;
+    if (["ADMIN_REVIEW", "QUOTATION_PENDING", "PENDING"].includes(rawStatus)) status = "PENDING";
+    else if (["REJECTED", "QUOTATION_REJECTED", "CANCELLED"].includes(rawStatus)) status = "REJECTED";
+    else if (["APPROVED", "IN_PROGRESS", "COMPLETED"].includes(rawStatus)) status = "APPROVED";
+    const createdValue = firstValue(r.createdAt, r.createdDate, r.requestDate, r.createdOn);
+    let created = "—";
+    if (createdValue) {
+        const date = new Date(createdValue);
+        created = Number.isNaN(date.getTime()) ? String(createdValue) : date.toLocaleString("en-IN");
+    }
+    return {
+        id,
+        rawStatus,
+        customer: String(firstValue(r.userName, r.customerName, nestedName(user, "username", "name", "fullName"), "—")),
+        phone: String(firstValue(r.userPhone, r.customerPhone, nestedName(user, "phone", "phoneNumber", "mobile"), "—")),
+        mechanic: String(firstValue(r.mechanicName, nestedName(mechanic, "name", "username"), "—")),
+        service: String(firstValue(r.serviceName, nestedName(service, "serviceName", "name"), r.description, "Service request")),
+        amount: Number(firstValue(r.repairQuotation, r.quotationAmount, r.proposedAmount, r.estimatedCost, r.amount, 0)),
+        status,
+        created,
+        reason: String(firstValue(r.mechanicDiagnosis, r.diagnosis, r.reason, r.description, "No diagnosis provided.")),
+        notes: String(firstValue(r.adminReviewNote, r.notes, r.remarks, "Review the proposed amount against the configured service pricing.")),
+        original: r
+    };
+}
+async function loadCharges() {
+    $("chargesBody").innerHTML = '<tr><td colspan="7" class="empty">Loading quotation reviews…</td></tr>';
+    try {
+        const response = await fetch(`${API_BASE_URL}/requests/admin-requests`, { headers: authHeaders() });
+        if (!response.ok) {
+            const body = await response.text();
+            throw new Error(response.status === 401 || response.status === 403
+                ? "Access denied. Please log in with an admin account."
+                : `Could not load requests (${response.status}). ${body}`);
+        }
+        const data = await response.json();
+        if (!Array.isArray(data)) throw new Error("The admin requests endpoint did not return a list.");
+        // This page is specifically for quotations that require an administrator's decision.
+        charges = data.map(normalizeRequest).filter(c =>
+            ["ADMIN_REVIEW", "PENDING_ADMIN_REVIEW"].includes(c.rawStatus)
+        );
+        render();
+        showToast(`Loaded ${charges.length} quotation(s) requiring review.`);
+    } catch (error) {
+        charges = [];
+        render();
+        $("chargesBody").innerHTML = `<tr><td colspan="7" class="empty">${escapeHtml(error.message || "Unable to connect to backend.")}</td></tr>`;
+        showToast(error.message || "Unable to load quotation reviews.");
+    }
+}
+function render() {
+    const query = $("searchInput").value.trim().toLowerCase();
+    const filter = $("statusFilter").value;
+    const filtered = charges.filter(charge => {
+        const searchable = [charge.id, charge.customer, charge.mechanic, charge.service, charge.reason, charge.status].join(" ").toLowerCase();
+        return searchable.includes(query) && (filter === "all" || charge.status === filter);
+    });
+    $("chargesBody").innerHTML = filtered.length ? filtered.map(charge => `
+        <tr>
+            <td><div class="request-id">ORV-${escapeHtml(charge.id)}</div><div class="cell-sub">${escapeHtml(charge.created)}</div></td>
+            <td><div class="cell-main">${escapeHtml(charge.customer)}</div><div class="cell-sub">${escapeHtml(charge.phone)}</div></td>
+            <td><div class="cell-main">${escapeHtml(charge.mechanic)}</div></td>
+            <td><div class="cell-main">${escapeHtml(charge.service)}</div><div class="cell-sub">${escapeHtml(charge.reason)}</div></td>
+            <td><div class="cell-main">${currency(charge.amount)}</div></td>
+            <td><span class="pill ${statusClasses[charge.status] || "pending"}">${statusLabels[charge.status] || escapeHtml(charge.status)}</span></td>
+            <td><button class="icon-btn" onclick="viewCharge(${JSON.stringify(charge.id)})">Review details</button></td>
+        </tr>`).join("") : '<tr><td colspan="7" class="empty">No quotations match your search.</td></tr>';
+
+    $("pendingCount").textContent = charges.filter(c => c.status === "PENDING").length;
+    $("approvedCount").textContent = charges.filter(c => c.status === "APPROVED").length;
+    $("rejectedCount").textContent = charges.filter(c => c.status === "REJECTED").length;
+    $("pendingAmount").textContent = currency(charges.filter(c => c.status === "PENDING").reduce((sum, c) => sum + c.amount, 0));
+}
+function viewCharge(id) {
+    const charge = charges.find(item => String(item.id) === String(id));
+    if (!charge) return;
+    $("modalTitle").textContent = "Quotation ORV-" + charge.id;
+    const fields = [
+        ["Customer", charge.customer], ["Customer contact", charge.phone],
+        ["Mechanic", charge.mechanic], ["Service", charge.service],
+        ["Proposed charge", currency(charge.amount)], ["Submitted", charge.created],
+        ["Current status", statusLabels[charge.status] || charge.status],
+        ["Diagnosis / reason", charge.reason, "full"], ["Review notes", charge.notes, "full"]
+    ];
+    $("detailGrid").innerHTML = fields.map(([label, value, className]) => `
+        <div class="detail ${className || ""}"><label>${escapeHtml(label)}</label><strong>${escapeHtml(value)}</strong></div>`).join("");
+    $("modalActions").innerHTML = charge.status === "PENDING" ? `
+        <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-soft" onclick="setStatus(${JSON.stringify(charge.id)}, 'REJECTED')">Reject quotation</button>
+        <button class="btn btn-primary" onclick="setStatus(${JSON.stringify(charge.id)}, 'APPROVED')">Approve charge</button>
+    ` : '<button class="btn btn-outline" onclick="closeModal()">Close</button>';
+    $("chargeModal").classList.add("show");
+}
+async function setStatus(id, status) {
+    const charge = charges.find(item => String(item.id) === String(id));
+    if (!charge || charge.status !== "PENDING") return;
+    const action = status === "APPROVED" ? "approve" : "reject";
+    if (!confirm(`Are you sure you want to ${action} this quotation?`)) return;
+
+    let url, body;
+    if (status === "APPROVED") {
+        const entered = prompt("Confirm the amount to approve (₹):", String(charge.amount));
+        if (entered === null) return;
+        const amount = Number(entered);
+        if (!Number.isFinite(amount) || amount < 0) {
+            showToast("Enter a valid non-negative amount.");
+            return;
+        }
+        url = `${API_BASE_URL}/admin/requests/${encodeURIComponent(id)}/approve-amount`;
+        body = JSON.stringify(amount);
+    } else {
+        url = `${API_BASE_URL}/admin/requests/${encodeURIComponent(id)}/reject-quotation`;
+    }
+    try {
+        const response = await fetch(url, {
+            method: status === "APPROVED" ? "PUT" : "PUT",
+            headers: authHeaders(status === "APPROVED"),
+            ...(body !== undefined ? { body } : {})
+        });
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Request failed (${response.status}).`);
+        }
+        closeModal();
+        showToast(status === "APPROVED" ? "Quotation amount approved." : "Quotation rejected.");
+        await loadCharges();
+    } catch (error) {
+        showToast(`Could not ${action} quotation: ${error.message || "Backend error."}`);
+    }
+}
+function closeModal() { $("chargeModal").classList.remove("show"); }
+function showToast(message) {
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
+}
+function toggleSidebar(open) {
+    $("sidebar").classList.toggle("open", open);
+    $("sidebarBackdrop").classList.toggle("show", open);
+}
+function logout() {
+    ["orvbaToken", "orvbaUsername", "username"].forEach(key => {
+        sessionStorage.removeItem(key); localStorage.removeItem(key);
+    });
+    window.location.href = "../login.html";
+}
+$("searchInput").addEventListener("input", render);
+$("statusFilter").addEventListener("change", render);
+$("chargeModal").addEventListener("click", event => { if (event.target === $("chargeModal")) closeModal(); });
+document.addEventListener("keydown", event => { if (event.key === "Escape") closeModal(); });
+const adminName = sessionStorage.getItem("orvbaUsername") || sessionStorage.getItem("username") ||
+    localStorage.getItem("orvbaUsername") || localStorage.getItem("username");
+if (adminName) $("adminName").textContent = adminName;
+loadCharges();
+</script>
+</body>
+</html>
+
+
+

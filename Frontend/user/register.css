@@ -1,0 +1,363 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #10233f;
+    --blue: #2563eb;
+    --cyan: #0891b2;
+    --muted: #64748b;
+    --border: #e2e8f0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--navy);
+    background:
+        radial-gradient(ellipse at 8% 20%, #eaf3ff, transparent 42%),
+        radial-gradient(ellipse at 90% 80%, #e7faff, transparent 38%),
+        #f8fafc;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    min-height: 74px;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    text-decoration: none;
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--navy);
+}
+
+.logo span {
+    color: var(--blue);
+}
+
+.nav-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.nav-link strong {
+    color: var(--blue);
+}
+
+.page-container {
+    width: min(100% - 36px, 1080px);
+    margin: auto;
+    padding: 45px 0;
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: center;
+    gap: 65px;
+}
+
+.welcome-panel .eyebrow,
+.form-label {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.welcome-panel h1 {
+    margin: 18px 0;
+    font-size: clamp(34px, 4vw, 48px);
+    line-height: 1.13;
+    letter-spacing: -1.8px;
+}
+
+.welcome-panel > p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.9;
+    max-width: 420px;
+}
+
+.benefit-list {
+    display: grid;
+    gap: 24px;
+    margin-top: 34px;
+}
+
+.benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.benefit-icon {
+    flex-shrink: 0;
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: #eaf2ff;
+    font-size: 20px;
+}
+
+.benefit h3 {
+    font-size: 14px;
+    margin: 2px 0 6px;
+}
+
+.benefit p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.form-panel {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--border);
+    border-radius: 23px;
+    padding: 32px;
+    box-shadow: 0 18px 50px rgba(15, 35, 65, 0.08);
+}
+
+.form-heading {
+    margin-bottom: 25px;
+}
+
+.form-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #eff6ff;
+    font-size: 22px;
+    margin-bottom: 16px;
+}
+
+.form-heading h2 {
+    font-size: 25px;
+    letter-spacing: -0.6px;
+    margin: 9px 0;
+}
+
+.form-heading p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.field-group {
+    margin-bottom: 19px;
+}
+
+.field-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.field-group input {
+    width: 100%;
+    height: 46px;
+    padding: 0 13px;
+    border: 1px solid #dbe3ee;
+    border-radius: 10px;
+    outline: none;
+    font-size: 13px;
+    color: var(--navy);
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field-group input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.field-group input::placeholder {
+    color: #9aa7b8;
+}
+
+.field-group small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 6px;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 65px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.terms-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin: 5px 0 20px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+    cursor: pointer;
+}
+
+.terms-row input {
+    margin-top: 3px;
+    accent-color: var(--blue);
+    flex-shrink: 0;
+}
+
+.submit-button {
+    width: 100%;
+    min-height: 48px;
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: linear-gradient(110deg, #1d4ed8, #2563eb, #0891b2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.22);
+}
+
+.submit-button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    transform: none;
+}
+
+.button-arrow {
+    font-size: 20px;
+}
+
+.message {
+    padding: 11px 12px;
+    border-radius: 9px;
+    margin-bottom: 15px;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.message.error {
+    color: #b91c1c;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+}
+
+.message.success {
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+}
+
+.login-prompt {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.login-prompt a,
+.back-link {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 11px;
+}
+
+footer {
+    padding: 18px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+@media (max-width: 800px) {
+    .page-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        max-width: 520px;
+        padding: 35px 0;
+    }
+
+    .welcome-panel h1 {
+        font-size: 37px;
+    }
+
+    .benefit-list {
+        gap: 16px;
+        margin-top: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 16px 18px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .nav-link {
+        font-size: 11px;
+    }
+
+    .form-panel {
+        padding: 23px 19px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}

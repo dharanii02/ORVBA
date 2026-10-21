@@ -1,0 +1,1114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORVBA | Roadside Assistance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #071537;
+      --blue: #1648d8;
+      --cyan: #00bfe8;
+      --muted: #71809b;
+      --border: #e1e9f5;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--navy);
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(ellipse at 90% 5%, #dff8ff 0, transparent 32%),
+        #f6f9ff;
+    }
+
+    a { text-decoration: none; }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 6%;
+      background: rgba(255,255,255,.94);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      color: var(--navy);
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .brand span { color: #079dcc; }
+
+    nav { display: flex; align-items: center; gap: 25px; }
+    nav a, .login-link {
+      color: #52617c;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    nav a:hover, .login-link:hover { color: var(--blue); }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 20px;
+      border-radius: 11px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .primary {
+      color: white;
+      background: linear-gradient(110deg, #1239bd, #087fce, var(--cyan));
+      box-shadow: 0 8px 22px #1648d82b;
+    }
+
+    .secondary {
+      color: var(--navy);
+      background: white;
+      border: 1px solid var(--border);
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .container { width: min(1120px, 90%); margin: auto; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: center;
+      gap: 45px;
+      padding: 85px 0;
+    }
+
+    .eyebrow {
+      color: #087eaf;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+    }
+
+    h1 {
+      margin: 20px 0;
+      font-size: clamp(40px, 5vw, 62px);
+      line-height: 1.08;
+      letter-spacing: -2px;
+    }
+
+    h1 span, h2 span { color: #087fce; }
+
+    .description {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+
+    .trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 27px;
+      color: #52617c;
+      font-size: 11px;
+    }
+
+    .visual {
+      min-height: 365px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid white;
+      border-radius: 30px;
+      background: linear-gradient(145deg, #e5f2ff, #e8fbff, #eeedff);
+      box-shadow: 0 20px 55px #183a780f;
+    }
+
+    .orbit {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border: 1px solid #1648d825;
+      border-radius: 50%;
+      box-shadow: 0 0 0 25px #1648d80a, 0 0 0 50px #1648d806;
+    }
+
+    .car { z-index: 1; font-size: 130px; filter: drop-shadow(0 15px 10px #07153720); }
+
+    .floating {
+      position: absolute;
+      z-index: 2;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: white;
+      box-shadow: 0 10px 28px #183a7812;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .floating small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .one { top: 25px; left: 20px; }
+    .two { right: 20px; bottom: 25px; }
+
+    .section { padding: 65px 0; }
+    .section-heading { max-width: 650px; margin: 0 auto 35px; text-align: center; }
+    h2 { margin: 13px 0; font-size: clamp(28px, 4vw, 39px); letter-spacing: -1px; }
+    .section-heading p, .card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+    .card {
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      background: white;
+      transition: .2s;
+    }
+
+    .card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px #183a780d; }
+    .icon { font-size: 27px; }
+    .card h3 { margin-bottom: 8px; font-size: 16px; }
+
+    .benefits { background: #ffffffa8; border-block: 1px solid var(--border); }
+
+    .cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      margin: 65px auto;
+      padding: 38px;
+      border-radius: 23px;
+      color: white;
+      background: linear-gradient(115deg, #071537, #123a9f, #087fce);
+    }
+
+    .cta h2 { color: white; margin-top: 0; }
+    .cta p { color: #d7e7ff; font-size: 13px; line-height: 1.7; }
+    .cta .button { color: var(--navy); background: white; white-space: nowrap; }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 27px 6%;
+      border-top: 1px solid var(--border);
+      background: white;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    
+
+    @media (max-width: 760px) {
+      .navbar { flex-wrap: wrap; }
+      nav { order: 3; width: 100%; justify-content: center; gap: 16px; }
+      nav a { font-size: 11px; }
+      .hero { grid-template-columns: 1fr; padding: 50px 0; }
+      .visual { min-height: 310px; }
+      .cards { grid-template-columns: 1fr; }
+      .cta { align-items: flex-start; flex-direction: column; padding: 27px; }
+    }
+    
+/* Premium navbar interactions */
+.navbar {
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.navbar:hover {
+  box-shadow: 0 8px 28px rgba(7, 21, 55, 0.045);
+}
+
+/* Animated underline on navigation links */
+.nav-links .nav-item {
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.25s ease;
+}
+
+.nav-links .nav-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+  width: 100%;
+  height: 2px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1648d8, #00bfe8);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s ease;
+}
+
+.nav-links .nav-item:hover,
+.nav-links .nav-item:focus-visible {
+  color: #1648d8;
+}
+
+.nav-links .nav-item:hover::after,
+.nav-links .nav-item:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Slight lift and glow on the main action */
+.assistance-button {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 7px 20px rgba(22, 72, 216, 0.2);
+}
+
+.assistance-button:hover {
+  box-shadow: 0 11px 28px rgba(22, 72, 216, 0.3);
+}
+
+/* Refined hover effects for content cards */
+.card {
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: #c8dcf5;
+  box-shadow: 0 17px 35px rgba(24, 58, 120, 0.09);
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Navbar account actions */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.login-link {
+    color: #536582;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.25s ease;
+}
+
+.login-link:hover {
+    color: #0879d9;
+}
+
+.register-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 23px;
+    border: 1.5px solid #0879d9;
+    border-radius: 12px;
+    background: #0879d9;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.25s ease,
+                box-shadow 0.25s ease,
+                transform 0.25s ease;
+}
+
+.register-button:hover {
+    background: #075bb5;
+    box-shadow: 0 6px 18px rgba(8, 121, 217, 0.22);
+    transform: translateY(-2px);
+}
+
+/* Navigation underline animation */
+.nav-item {
+    position: relative;
+    color: #536582;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 0;
+}
+
+.nav-item::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #00b9e8;
+    transition: width 0.25s ease;
+}
+
+.nav-item:hover::after {
+    width: 100%;
+}
+
+.nav-item:hover {
+    color: #0879d9;
+}
+
+/* Hero roadside assistance image */
+.hero-visual {
+    min-height: 440px;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 28px;
+    background: #eaf6ff;
+    box-shadow: 0 20px 55px rgba(24, 58, 120, 0.10);
+}
+
+.hero-image {
+    display: block;
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* How It Works section */
+.how-section {
+    padding: 85px 0;
+    background: linear-gradient(
+        180deg,
+        #f6f9ff 0%,
+        #ffffff 50%,
+        #f4f8ff 100%
+    );
+}
+
+.how-section .section-heading {
+    margin-bottom: 48px;
+}
+
+.how-section .section-heading p {
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+/* Step cards */
+.how-cards {
+    gap: 24px;
+}
+
+.how-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 285px;
+    padding: 28px;
+    border: 1px solid #e2eaf6;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 25px rgba(20, 55, 110, 0.035);
+    transition:
+        transform 0.28s ease,
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
+}
+
+.how-card:hover {
+    transform: translateY(-7px);
+    border-color: #bcd9fa;
+    box-shadow: 0 20px 40px rgba(22, 72, 216, 0.10);
+}
+
+.step-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.step-icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 17px;
+    background: linear-gradient(135deg, #e5efff, #e2faff);
+    font-size: 26px;
+}
+
+.step-number {
+    color: #1682d1;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.how-card h3 {
+    margin: 0 0 12px;
+    color: #071537;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+.how-card p {
+    margin: 0;
+    color: #71809b;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.step-footer {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: auto;
+    padding-top: 22px;
+    color: #52617c;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.step-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00bfe8;
+    box-shadow: 0 0 0 4px #e6faff;
+}
+
+/* Slight emphasis on the middle step */
+.featured-card {
+    border-color: #c8ddfb;
+    background: linear-gradient(145deg, #ffffff, #f3f9ff);
+}
+
+.featured-card .step-icon {
+    background: linear-gradient(135deg, #dce9ff, #d7f8ff);
+}
+
+.featured-card .step-number {
+    color: #1648d8;
+}
+
+/* Benefits section */
+.benefits {
+    padding: 85px 0;
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(215, 239, 255, 0.45),
+            transparent 60%
+        ),
+        #ffffff;
+    border-top: 1px solid #e5edf8;
+    border-bottom: 1px solid #e5edf8;
+}
+
+.benefits .section-heading {
+    margin-bottom: 48px;
+}
+
+.benefits .section-heading p {
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.benefit-cards {
+    gap: 24px;
+}
+
+.benefit-card {
+    min-height: 325px;
+    padding: 30px;
+    border: 1px solid #e2eaf6;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 25px rgba(20, 55, 110, 0.035);
+    transition:
+        transform 0.28s ease,
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
+}
+
+.benefit-card:hover {
+    transform: translateY(-6px);
+    border-color: #c5dcfa;
+    box-shadow: 0 18px 38px rgba(22, 72, 216, 0.09);
+}
+
+.benefit-icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    margin-bottom: 23px;
+    border-radius: 18px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.shield-icon {
+    color: #1455c0;
+    background: linear-gradient(135deg, #e4edff, #d9f3ff);
+}
+
+.price-icon {
+    color: #087fce;
+    background: linear-gradient(135deg, #dff7ff, #e8f3ff);
+}
+
+.feedback-icon {
+    color: #6550d9;
+    background: linear-gradient(135deg, #eee8ff, #e2eaff);
+}
+
+.benefit-label {
+    margin-bottom: 10px;
+    color: #1682d1;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.benefit-card h3 {
+    margin: 0 0 12px;
+    color: #071537;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.benefit-card p {
+    margin: 0;
+    color: #71809b;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.benefit-bottom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 17px;
+    border-top: 1px solid #edf1f8;
+    color: #52617c;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.benefit-line {
+    width: 18px;
+    height: 3px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #1648d8, #00bfe8);
+}
+
+/* Final call-to-action section */
+.cta {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    align-items: center;
+    gap: 40px;
+    margin: 80px auto;
+    padding: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 28px;
+    color: #ffffff;
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(0, 191, 232, 0.3),
+            transparent 35%
+        ),
+        linear-gradient(120deg, #071537, #123a9f 65%, #087fce);
+    box-shadow: 0 22px 50px rgba(7, 21, 55, 0.13);
+}
+
+.cta-content,
+.cta-action {
+    position: relative;
+    z-index: 1;
+}
+
+.cta-eyebrow {
+    margin-bottom: 15px;
+    color: #72e4ff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+}
+
+.cta h2 {
+    margin: 0 0 16px;
+    color: #ffffff;
+    font-size: 32px;
+    line-height: 1.3;
+    letter-spacing: -0.8px;
+}
+
+.cta-content > p {
+    max-width: 450px;
+    margin: 0;
+    color: #d7e7ff;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.cta-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 25px;
+    color: #e5f4ff;
+    font-size: 11px;
+}
+
+.cta-action {
+    padding: 27px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.09);
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.cta-icon {
+    display: grid;
+    place-items: center;
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 12px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.13);
+    font-size: 34px;
+}
+
+.cta-action > p {
+    margin: 0 0 20px;
+    color: #e1edff;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.cta .cta-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 11px;
+    color: #0b2456;
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cta .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 24px rgba(0, 0, 0, 0.15);
+}
+
+.cta-login {
+    display: block;
+    margin-top: 16px;
+    color: #d7e7ff;
+    font-size: 11px;
+}
+
+.cta-login strong {
+    color: #ffffff;
+}
+
+.cta-login:hover strong {
+    text-decoration: underline;
+}
+
+/* Footer */
+.site-footer {
+    padding: 40px 6% 0;
+    border-top: 1px solid #e1e9f5;
+    background: #ffffff;
+}
+
+.footer-main {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr;
+    gap: 55px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-bottom: 35px;
+}
+
+.footer-logo {
+    color: #071537;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+
+.footer-logo span {
+    color: #079dcc;
+}
+
+.footer-brand p {
+    margin: 10px 0 0;
+    color: #52617c;
+    font-size: 12px;
+}
+
+.footer-brand .footer-tagline {
+    max-width: 280px;
+    margin-top: 15px;
+    color: #8290a7;
+    line-height: 1.8;
+}
+
+.footer-links-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13px;
+}
+
+.footer-links-group h4 {
+    margin: 5px 0 8px;
+    color: #071537;
+    font-size: 13px;
+}
+
+.footer-links-group a {
+    color: #71809b;
+    font-size: 12px;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-links-group a:hover {
+    color: #1648d8;
+    transform: translateX(3px);
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 20px 0;
+    border-top: 1px solid #edf1f8;
+    color: #8290a7;
+    font-size: 11px;
+}
+
+.footer-bottom a {
+    color: #52617c;
+    font-weight: 600;
+}
+
+.footer-bottom a:hover {
+    color: #1648d8;
+}
+
+/* Keep the page content aligned with the navbar */
+#home,
+#how-it-works,
+#benefits,
+#contact {
+    scroll-margin-top: 90px;
+}
+
+
+  </style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">ORVBA<span>.</span></a>
+
+  <nav class="nav-links">
+    <a href="#home" class="nav-item">Home</a>
+    <a href="#how-it-works" class="nav-item">How it works</a>
+    <a href="#why-orvba" class="nav-item">Why ORVBA</a>
+    <a href="#contact" class="nav-item">Contact</a>
+  </nav>
+
+  <div class="nav-actions">
+    <a href="/Frontend/login.html" class="login-link">Log in</a>
+    <a href="/Frontend/register.html" class="register-button">Register</a>
+  </div>
+</header>
+
+  <main>
+    <section class="container hero" id="home">
+      <div>
+        <div class="eyebrow">ROADSIDE ASSISTANCE, SIMPLIFIED</div>
+        <h1>Road trouble?<br><span>We've got you.</span></h1>
+        <p class="description">
+          Breakdowns can happen when you least expect them.
+          ORVBA helps you request roadside assistance, connect
+          with a mechanic, and follow your service request.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button primary" href="login.html">Get assistance →</a>
+          <a class="button secondary" href="#how-it-works">Discover how ↓</a>
+        </div>
+
+        <div class="trust">
+          <span>✓ Mechanic verification</span>
+          <span>✓ Quotation review</span>
+          <span>✓ Service tracking</span>
+        </div>
+      </div>
+
+    <div class="visual hero-visual">
+    <img
+        src="assets/images/roadside-assistance.png"
+        alt="Mechanic repairing a car during a roadside breakdown"
+        class="hero-image"
+    >
+</div>
+    </section>
+
+
+<section class="section how-section" id="how-it-works">
+  <div class="container">
+
+    <div class="section-heading">
+      <div class="eyebrow">SIMPLE. CLEAR. CONVENIENT.</div>
+      <h2>Help is just <span>three steps away.</span></h2>
+      <p>
+        Getting roadside assistance shouldn't be complicated.
+        ORVBA keeps your service journey simple and organised.
+      </p>
+    </div>
+
+    <div class="cards how-cards">
+
+      <article class="card how-card">
+        <div class="step-top">
+          <div class="step-icon">📍</div>
+          <span class="step-number">STEP 01</span>
+        </div>
+
+        <h3>Request assistance</h3>
+        <p>
+          Select your vehicle, describe the breakdown, and share
+          your location to request roadside assistance.
+        </p>
+
+        <div class="step-footer">
+          <span class="step-dot"></span>
+          Tell us what happened
+        </div>
+      </article>
+
+      <article class="card how-card featured-card">
+        <div class="step-top">
+          <div class="step-icon">🛠️</div>
+          <span class="step-number">STEP 02</span>
+        </div>
+
+        <h3>Connect with a mechanic</h3>
+        <p>
+          An approved mechanic can respond to your request and
+          keep you informed as assistance progresses.
+        </p>
+
+        <div class="step-footer">
+          <span class="step-dot"></span>
+          Get connected
+        </div>
+      </article>
+
+      <article class="card how-card">
+        <div class="step-top">
+          <div class="step-icon">✓</div>
+          <span class="step-number">STEP 03</span>
+        </div>
+
+        <h3>Track your service</h3>
+        <p>
+          Review the repair quotation, follow service updates,
+          and check your bill when the repair is completed.
+        </p>
+
+        <div class="step-footer">
+          <span class="step-dot"></span>
+          Stay informed
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section benefits" id="benefits">
+  <div class="container">
+
+    <div class="section-heading">
+      <div class="eyebrow">BUILT AROUND YOUR JOURNEY</div>
+      <h2>A clearer way to get <span>back on the road.</span></h2>
+      <p>
+        More visibility, clearer decisions, and a better-organised
+        roadside assistance experience.
+      </p>
+    </div>
+
+    <div class="cards benefit-cards">
+
+      <article class="card benefit-card">
+        <div class="benefit-icon shield-icon">
+          <span>✓</span>
+        </div>
+        <div class="benefit-label">TRUST & SAFETY</div>
+        <h3>Verified mechanics</h3>
+        <p>
+          Mechanic accounts go through an approval process before
+          they can provide roadside assistance through ORVBA.
+        </p>
+        <div class="benefit-bottom">
+          <span class="benefit-line"></span>
+          <span>Approved service providers</span>
+        </div>
+      </article>
+
+      <article class="card benefit-card">
+        <div class="benefit-icon price-icon">
+          <span>₹</span>
+        </div>
+        <div class="benefit-label">CLEARER DECISIONS</div>
+        <h3>Quotation review</h3>
+        <p>
+          Review the proposed repair cost and approve the quotation
+          before the mechanic proceeds with the repair.
+        </p>
+        <div class="benefit-bottom">
+          <span class="benefit-line"></span>
+          <span>Review before repair</span>
+        </div>
+      </article>
+
+      <article class="card benefit-card">
+        <div class="benefit-icon feedback-icon">
+          <span>☆</span>
+        </div>
+        <div class="benefit-label">YOUR EXPERIENCE MATTERS</div>
+        <h3>Customer feedback</h3>
+        <p>
+          Share your experience after the service is completed
+          and help us understand the quality of assistance.
+        </p>
+        <div class="benefit-bottom">
+          <span class="benefit-line"></span>
+          <span>Share your experience</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section class="container cta" id="contact">
+  <div class="cta-content">
+    <div class="cta-eyebrow">NEED HELP ON THE ROAD?</div>
+    <h2>When the road gets tough,<br>we're here for you.</h2>
+    <p>
+      Get connected with roadside assistance and keep your
+      service journey organised with ORVBA.
+    </p>
+    <div class="cta-trust">
+      <span>✓ Verified mechanics</span>
+      <span>✓ Quotation review</span>
+    </div>
+  </div>
+
+  <div class="cta-action">
+    <div class="cta-icon">🚘</div>
+    <p>Your next journey deserves peace of mind.</p>
+    <a class="cta-button" href="register.html">
+      Create your account <span>↗</span>
+    </a>
+    <a class="cta-login" href="login.html">
+      Already registered? <strong>Log in</strong>
+    </a>
+  </div>
+</section>
+
+  </main>
+
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo">
+        ORVBA<span>.</span>
+      </a>
+      <p>On-Road Vehicle Breakdown Assistance</p>
+      <p class="footer-tagline">
+        Helping you get back on the road with confidence.
+      </p>
+    </div>
+
+    <div class="footer-links-group">
+      <h4>Explore</h4>
+      <a href="#home">Home</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#benefits">Why ORVBA</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="footer-links-group">
+      <h4>Your account</h4>
+      <a href="login.html">Log in</a>
+      <a href="register.html">Create an account</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 ORVBA. All rights reserved.</span>
+    <a href="#home">Back to top ↑</a>
+  </div>
+</footer>
+
+</body>
+</html>

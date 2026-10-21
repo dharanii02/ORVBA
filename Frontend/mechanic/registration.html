@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mechanic Registration | ORVBA</title>
+    <link rel="stylesheet" href="registration.css">
+    <script src="registration.js" defer></script>
+</head>
+<body>
+
+<header class="navbar">
+    <a href="../index.html" class="logo">ORVBA<span>.</span></a>
+    <a href="../login.html" class="nav-link">
+        Already registered? <strong>Log in</strong>
+    </a>
+</header>
+
+<main class="page-container">
+
+    <section class="welcome-panel">
+        <span class="eyebrow">JOIN THE ORVBA NETWORK</span>
+        <h1>Your skills.<br>Someone's<br>roadside rescue.</h1>
+        <p>
+            Register as an ORVBA mechanic and help drivers get back
+            on the road with reliable roadside assistance.
+        </p>
+
+        <div class="benefit-list">
+            <div class="benefit">
+                <span class="benefit-icon">🛠️</span>
+                <div>
+                    <h3>Put your skills to work</h3>
+                    <p>Receive service opportunities suited to your expertise.</p>
+                </div>
+            </div>
+            <div class="benefit">
+                <span class="benefit-icon">📍</span>
+                <div>
+                    <h3>Help drivers nearby</h3>
+                    <p>Support people who need roadside assistance.</p>
+                </div>
+            </div>
+            <div class="benefit">
+                <span class="benefit-icon">🛡️</span>
+                <div>
+                    <h3>Admin verification</h3>
+                    <p>Your profile is reviewed before you can accept jobs.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="notice">
+            <span>ⓘ</span>
+            <p>
+                Your account must be approved by the ORVBA administrator
+                before you can become available for service requests.
+            </p>
+        </div>
+    </section>
+
+    <section class="form-panel">
+
+        <div class="form-heading">
+            <div class="form-icon">🔧</div>
+            <span class="form-label">MECHANIC ACCOUNT</span>
+            <h2 id="stepHeading">Create your login</h2>
+            <p id="stepDescription">First, set up your account credentials.</p>
+        </div>
+
+        <div class="progress-area">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="step-indicators">
+                <div class="step-indicator active" data-indicator="0">
+                    <span class="step-number">1</span>
+                    <span>Account</span>
+                </div>
+                <div class="step-indicator" data-indicator="1">
+                    <span class="step-number">2</span>
+                    <span>Details</span>
+                </div>
+                <div class="step-indicator" data-indicator="2">
+                    <span class="step-number">3</span>
+                    <span>Location</span>
+                </div>
+            </div>
+        </div>
+
+        <form id="mechanicForm" novalidate>
+
+            <!-- STEP 1: LOGIN CREDENTIALS -->
+            <div class="form-step active" data-step="0">
+
+                <h3 class="section-title">Login credentials</h3>
+
+                <div class="field-group">
+                    <label for="username">Username *</label>
+                    <input type="text" id="username" name="username"
+                           placeholder="Choose a username"
+                           minlength="3" maxlength="50"
+                           autocomplete="username" required>
+                </div>
+
+                <div class="field-group">
+                    <label for="password">Password *</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password"
+                               placeholder="Create a password"
+                               minlength="8" autocomplete="new-password" required>
+                        <button type="button" class="toggle-password"
+                                data-target="password">SHOW</button>
+                    </div>
+                    <small>Use at least 8 characters.</small>
+                </div>
+
+                <div class="field-group">
+                    <label for="confirmPassword">Confirm password *</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirmPassword"
+                               name="confirmPassword"
+                               placeholder="Enter password again"
+                               minlength="8" autocomplete="new-password" required>
+                        <button type="button" class="toggle-password"
+                                data-target="confirmPassword">SHOW</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- STEP 2: PERSONAL AND PROFESSIONAL DETAILS -->
+            <div class="form-step" data-step="1" hidden>
+
+                <h3 class="section-title">Personal information</h3>
+
+                <div class="field-group">
+                    <label for="name">Full name *</label>
+                    <input type="text" id="name" name="name"
+                           placeholder="Enter your full name"
+                           maxlength="100" autocomplete="name" required>
+                </div>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label for="phone">Phone number *</label>
+                        <input type="tel" id="phone" name="phone"
+                               placeholder="10-digit number"
+                               inputmode="numeric" maxlength="10"
+                               autocomplete="tel" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="email">Email address *</label>
+                        <input type="email" id="email" name="email"
+                               placeholder="you@example.com"
+                               maxlength="150" autocomplete="email" required>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="address">Full address *</label>
+                    <textarea id="address" name="address" rows="3"
+                              maxlength="500"
+                              placeholder="Street, area, city and PIN code"
+                              autocomplete="street-address" required></textarea>
+                </div>
+
+                <h3 class="section-title">Professional details</h3>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label for="specialization">Specialization *</label>
+                        <div class="select-wrapper">
+                            <select id="specialization" name="specialization" required>
+                                <option value="">Choose specialization</option>
+                                <option value="Two-Wheeler">Two-Wheeler</option>
+                                <option value="Four-Wheeler">Four-Wheeler</option>
+                                <option value="Both">Both</option>
+                                <option value="Electrical">Vehicle Electrical</option>
+                                <option value="General Mechanic">General Mechanic</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="experience">Experience *</label>
+                        <div class="select-wrapper">
+                            <select id="experience" name="experience" required>
+                                <option value="">Choose experience</option>
+                                <option value="Less than 1 year">Less than 1 year</option>
+                                <option value="1-3 years">1–3 years</option>
+                                <option value="4-6 years">4–6 years</option>
+                                <option value="7-10 years">7–10 years</option>
+                                <option value="More than 10 years">More than 10 years</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Identity verification</h3>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label for="idProof">Identity proof type *</label>
+                        <div class="select-wrapper">
+                            <select id="idProof" name="idProof" required>
+                                <option value="">Choose proof type</option>
+                                <option value="Aadhaar">Aadhaar</option>
+                                <option value="Driving Licence">Driving Licence</option>
+                                <option value="Voter ID">Voter ID</option>
+                                <option value="Passport">Passport</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="idProofNumber">Proof number *</label>
+                        <input type="text" id="idProofNumber"
+                               name="idProofNumber"
+                               placeholder="Enter proof number"
+                               maxlength="50" required>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- STEP 3: LOCATION AND SUBMISSION -->
+            <div class="form-step" data-step="2" hidden>
+
+                <h3 class="section-title">Your service location</h3>
+
+                <p class="section-description">
+                    Share your current location so ORVBA can help connect you
+                    with nearby roadside assistance requests.
+                </p>
+
+                <!-- Hidden coordinate fields remain available to registration.js
+                     and are included in the existing backend request payload. -->
+                <input type="hidden" id="latitude" name="latitude">
+                <input type="hidden" id="longitude" name="longitude">
+
+                <div class="location-action">
+                    <button type="button" id="getLocationButton" class="location-button">
+                        <span class="location-button-icon" aria-hidden="true">📍</span>
+                        <span id="locationButtonText">Use My Location</span>
+                    </button>
+                    <p id="locationMessage" class="location-message" role="status"
+                       aria-live="polite">
+                        Location is optional. Tap the button to capture your GPS coordinates.
+                    </p>
+                </div>
+
+                <div class="location-tip">
+                    <span>🔒</span>
+                    <p>
+                        Your coordinates are included with registration to help
+                        identify nearby mechanics. The latitude and longitude
+                        values are not displayed.
+                    </p>
+                </div>
+
+                <label class="terms-row">
+                    <input type="checkbox" id="terms" required>
+                    <span>
+                        I confirm that my information is accurate and
+                        agree to the administrator verification process.
+                    </span>
+                </label>
+
+                <div class="review-note">
+                    <span>🛡️</span>
+                    <div>
+                        <strong>What happens next?</strong>
+                        <p>
+                            Your mechanic account will remain unavailable
+                            until an administrator approves your profile.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <p id="registerMessage" class="message"
+               role="status" aria-live="polite" hidden></p>
+
+            <div class="form-navigation">
+                <button type="button" id="backButton" class="back-button" hidden>
+                    <span>←</span> Back
+                </button>
+
+                <button type="button" id="nextButton" class="submit-button">
+                    <span>Continue</span>
+                    <span class="button-arrow">→</span>
+                </button>
+
+                <button type="submit" id="registerButton"
+                        class="submit-button" hidden>
+                    <span>Register mechanic</span>
+                    <span class="button-arrow">→</span>
+                </button>
+            </div>
+
+        </form>
+
+        <p class="login-prompt">
+            Already registered? <a href="../login.html">Log in here</a>
+        </p>
+
+        <a href="../register.html" class="back-link">
+            ← Choose another account type
+        </a>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 ORVBA. Help is always on the way.</p>
+</footer>
+
+</body>
+</html>

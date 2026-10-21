@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Requests | ORVBA Admin</title>
+
+<style>
+:root {
+  --navy: #101b3b;
+  --blue: #356dff;
+  --cyan: #37c9e8;
+  --bg: #f4f7fc;
+  --text: #1b2540;
+  --muted: #71809c;
+  --line: #e5eaf3;
+  --green: #138a61;
+  --red: #c43d52;
+}
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 245px;
+  padding: 25px 16px;
+  color: white;
+  background: linear-gradient(175deg, var(--navy), #0b142d);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 25px;
+  border-bottom: 1px solid #ffffff20;
+}
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  font-size: 20px;
+  font-weight: 900;
+}
+.brand small {
+  display: block;
+  color: #a9b8d7;
+  margin-top: 4px;
+  font-size: 10px;
+}
+.nav-heading {
+  margin: 25px 12px 10px;
+  color: #8293b8;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+.nav a {
+  display: block;
+  margin: 5px 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #c0cbe0;
+  font-size: 13px;
+}
+.nav a:hover, .nav a.active {
+  background: #ffffff15;
+  color: white;
+}
+.nav a.active { border-left: 3px solid var(--cyan); }
+
+.sidebar-note {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  right: 25px;
+  color: #aab8d3;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.sidebar-note strong {
+  color: white;
+  display: block;
+}
+
+.main {
+  margin-left: 245px;
+  padding: 28px;
+  max-width: 1600px;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+.eyebrow {
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+h1 { margin: 7px 0 0; font-size: 28px; }
+
+.admin {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+  font-size: 12px;
+}
+.hero {
+  padding: 27px;
+  margin-bottom: 22px;
+  border-radius: 19px;
+  color: white;
+  background: linear-gradient(115deg, #172b59, #234a91 65%, #1b8ca9);
+}
+.hero h2 { margin: 0 0 10px; font-size: 23px; }
+.hero p {
+  margin: 0;
+  color: #d4e1ff;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 22px;
+}
+.stat, .panel {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 10px 28px #1829520a;
+}
+.stat { padding: 18px; }
+.stat-label { color: var(--muted); font-size: 12px; }
+.stat strong { display: block; margin-top: 12px; font-size: 27px; }
+.stat small { color: var(--muted); font-size: 11px; }
+.panel { padding: 22px; }
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+h3 { margin: 0; font-size: 16px; }
+.sub { color: var(--muted); font-size: 12px; margin-top: 6px; }
+
+.btn {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.primary {
+  color: white;
+  background: linear-gradient(110deg, var(--blue), #418bff);
+}
+.outline {
+  color: #52617c;
+  background: white;
+  border: 1px solid var(--line);
+}
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.field {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #dfe6f1;
+  border-radius: 9px;
+  background: white;
+  outline: none;
+  font-size: 12px;
+}
+.field:focus { border-color: #83a4ff; }
+.search { flex: 1; min-width: 160px; }
+.filter { width: 180px; }
+
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+th {
+  padding: 13px 12px;
+  text-align: left;
+  color: #7b88a2;
+  background: #f8faff;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+}
+td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #edf0f6;
+  font-size: 12px;
+  vertical-align: middle;
+}
+.request-id { color: #315dc8; font-weight: 800; }
+.cell-main { font-weight: 750; }
+.cell-sub { margin-top: 5px; color: var(--muted); font-size: 10px; }
+
+.pill {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.pending { background: #fff5df; color: #a86a0a; }
+.assigned, .accepted, .on-the-way, .arrived {
+  background: #eaf1ff;
+  color: #315dc8;
+}
+.quotation-pending, .admin-review {
+  background: #f2eaff;
+  color: #7947b4;
+}
+.in-progress { background: #e1f6ff; color: #087a9b; }
+.completed { background: #e5f8f0; color: var(--green); }
+.cancelled { background: #fff0f2; color: var(--red); }
+
+.action-btn {
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: white;
+  color: #52617c;
+  font-size: 11px;
+}
+.action-btn:hover { background: #f2f6ff; }
+
+.notice {
+  margin-bottom: 18px;
+  padding: 13px;
+  border: 1px solid #f5e6bd;
+  border-radius: 11px;
+  background: #fff8e9;
+  color: #8a641f;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.empty { padding: 24px; text-align: center; color: var(--muted); }
+
+.modal-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  padding: 18px;
+  background: #0a153b70;
+  align-items: center;
+  justify-content: center;
+}
+.modal-bg.show { display: flex; }
+.modal {
+  width: min(560px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+  border-radius: 17px;
+  background: white;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.close {
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 11px;
+  font-size: 20px;
+  background: #f1f4fa;
+}
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.detail {
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #fbfcff;
+  overflow-wrap: anywhere;
+}
+.detail label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.detail strong { font-size: 12px; line-height: 1.5; }
+.full { grid-column: 1 / -1; }
+
+.timeline {
+  margin: 18px 0 0 7px;
+  padding-left: 17px;
+  border-left: 2px solid #dce6ff;
+}
+.timeline p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.timeline strong { color: var(--text); }
+
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  padding: 13px 18px;
+  border-radius: 10px;
+  color: white;
+  background: #14264e;
+  font-size: 12px;
+  display: none;
+  z-index: 30;
+}
+.toast.show { display: block; }
+
+@media(max-width:1100px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media(max-width:760px) {
+  .sidebar { position: static; width: auto; padding: 16px; }
+  .nav-heading, .sidebar-note { display: none; }
+  .nav { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 15px; }
+  .nav a { padding: 9px; margin: 0; }
+  .main { margin-left: 0; padding: 18px 12px; }
+  .topbar { align-items: flex-start; }
+  h1 { font-size: 23px; }
+  .admin { display: none; }
+  .hero { padding: 21px; }
+  .hero h2 { font-size: 20px; }
+  .panel { padding: 15px; }
+  .panel-heading { align-items: flex-start; flex-direction: column; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .full { grid-column: auto; }
+}
+@media(max-width:450px) {
+  .stats { gap: 9px; }
+  .stat { padding: 13px; }
+  .stat strong { font-size: 23px; }
+  .toolbar { flex-direction: column; }
+  .filter { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">O</div>
+    <div><strong>ORVBA</strong><small>ADMIN CONTROL CENTER</small></div>
+  </div>
+
+  <div class="nav-heading">WORKSPACE</div>
+  <nav class="nav">
+    <a href="dashboard.html">▦ Dashboard</a>
+    <a href="mechanics.html">♙ Mechanics</a>
+    <a href="services.html">⚙ Services &amp; Pricing</a>
+    <a class="active" href="requests.html">▤ Service Requests</a>
+    <a href="charges.html">₹ Charge Review</a>
+    <a href="#" onclick="logout();return false">↪ Logout</a>
+  </nav>
+
+  <div class="sidebar-note">
+    <strong>Every request matters.</strong>
+    Monitor roadside assistance requests and identify those needing attention.
+  </div>
+</aside>
+
+<main class="main">
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Admin workspace / Operations</div>
+      <h1>Service Requests</h1>
+    </div>
+    <div class="admin">Administrator · System admin</div>
+  </header>
+
+  <section class="hero">
+    <h2>Track every breakdown from request to resolution.</h2>
+    <p>Monitor request status, customer details, locations and assigned mechanics. Quotation decisions are handled separately on the Charge Review page.</p>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-label">Total requests</div>
+      <strong id="totalCount">—</strong>
+      <small>Loaded from database</small>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Awaiting assignment</div>
+      <strong id="pendingCount">—</strong>
+      <small>New requests</small>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Active requests</div>
+      <strong id="activeCount">—</strong>
+      <small>Not yet completed</small>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Completed</div>
+      <strong id="completedCount">—</strong>
+      <small>Marked complete</small>
+    </div>
+  </section>
+
+  <div class="notice" id="connectionNotice">
+    <strong>Connecting to the backend...</strong> Loading service requests from the database.
+  </div>
+
+  <section class="panel">
+    <div class="panel-heading">
+      <div>
+        <h3>All breakdown requests</h3>
+        <div class="sub">Search by request ID, customer, mechanic, service or location.</div>
+      </div>
+      <button class="btn outline" id="refreshButton" onclick="loadRequests()">Refresh requests</button>
+    </div>
+
+    <div class="toolbar">
+      <input id="searchInput" class="field search" placeholder="Search requests...">
+      <select id="statusFilter" class="field filter">
+        <option value="all">All statuses</option>
+        <option value="PENDING">Pending</option>
+        <option value="MECHANIC_ASSIGNED">Mechanic assigned</option>
+        <option value="ACCEPTED">Accepted</option>
+        <option value="ON_THE_WAY">On the way</option>
+        <option value="ARRIVED">Arrived</option>
+        <option value="QUOTATION_PENDING">Quotation pending</option>
+        <option value="ADMIN_REVIEW">Admin review</option>
+        <option value="IN_PROGRESS">In progress</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="CANCELLED">Cancelled</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Request</th>
+            <th>Customer</th>
+            <th>Service / Issue</th>
+            <th>Location</th>
+            <th>Mechanic</th>
+            <th>Status</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="requestsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="sub" style="margin-top:16px">
+      Use Charge Review for quotation decisions. Use this page for request tracking.
+    </div>
+  </section>
+</main>
+
+<div class="modal-bg" id="requestModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h3 id="modalTitle">Request details</h3>
+        <div class="sub">Breakdown request overview</div>
+      </div>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <div class="detail-grid" id="detailGrid"></div>
+    <div class="timeline" id="timeline"></div>
+    <button class="btn outline" style="margin-top:16px" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const API_BASE_URL = "http://localhost:8080";
+const $ = id => document.getElementById(id);
+let requests = [];
+let toastTimer;
+
+const token = sessionStorage.getItem("orvbaToken") ||
+              localStorage.getItem("orvbaToken");
+
+const statusLabels = {
+  PENDING: "Pending",
+  MECHANIC_ASSIGNED: "Mechanic assigned",
+  ACCEPTED: "Accepted",
+  ON_THE_WAY: "On the way",
+  ARRIVED: "Arrived",
+  QUOTATION_PENDING: "Quotation pending",
+  ADMIN_REVIEW: "Admin review",
+  IN_PROGRESS: "In progress",
+  COMPLETED: "Completed",
+  CANCELLED: "Cancelled"
+};
+
+const statusClasses = {
+  PENDING: "pending",
+  MECHANIC_ASSIGNED: "assigned",
+  ACCEPTED: "accepted",
+  ON_THE_WAY: "on-the-way",
+  ARRIVED: "arrived",
+  QUOTATION_PENDING: "quotation-pending",
+  ADMIN_REVIEW: "admin-review",
+  IN_PROGRESS: "in-progress",
+  COMPLETED: "completed",
+  CANCELLED: "cancelled"
+};
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[char]));
+}
+
+function firstValue(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null && String(value).trim() !== "") return value;
+  }
+  return "—";
+}
+
+function nestedName(value, fallback = "—") {
+  if (value === undefined || value === null) return fallback;
+  if (typeof value === "string" || typeof value === "number") return value;
+  return firstValue(value.name, value.fullName, value.username, value.userName, value.serviceName, value.mechanicName, fallback);
+}
+
+function formatDate(value) {
+  if (!value) return "—";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString();
+}
+
+function normalizeRequest(raw) {
+  const user = raw.user || raw.customer || raw.requestedBy || raw.createdBy || {};
+  const mechanic = raw.mechanic || raw.assignedMechanic || {};
+  const service = raw.service || raw.requestedService || {};
+  const vehicle = raw.vehicle || raw.vehicleDetails || {};
+  const status = String(raw.status || raw.requestStatus || "PENDING").toUpperCase();
+  const userAccount = user.user || user.account || {};
+  const mechanicAccount = mechanic.user || mechanic.account || {};
+
+  return {
+    raw,
+    id: firstValue(raw.requestId, raw.id, raw.serviceRequestId),
+    customer: firstValue(raw.customerName, raw.userName, raw.username, user.name, user.fullName, user.username, userAccount.username, typeof raw.customer === "string" ? raw.customer : null, "Customer details unavailable"),
+    phone: firstValue(raw.customerPhone, raw.phone, raw.phoneNumber, user.phone, user.phoneNumber, userAccount.phone, "—"),
+    service: firstValue(raw.serviceName, service.serviceName, typeof raw.service === "string" ? raw.service : null, raw.requestedServiceName, "Service details unavailable"),
+    issue: firstValue(raw.issueDescription, raw.problemDescription, raw.description, raw.issue, raw.breakdownDescription, raw.mechanicDiagnosis, "—"),
+    location: firstValue(raw.location, raw.address, raw.breakdownLocation, raw.customerLocation, user.address, "—"),
+    mechanic: firstValue(raw.mechanicName, mechanic.name, mechanic.fullName, mechanicAccount.username, mechanic.username, "Not assigned"),
+    mechanicPhone: firstValue(raw.mechanicPhone, mechanic.phone, mechanic.phoneNumber, "—"),
+    status,
+    created: formatDate(firstValue(raw.createdAt, raw.createdDate, raw.requestDate, raw.dateCreated, raw.createdOn, "—")),
+    vehicle: firstValue(raw.vehicleType, vehicle.vehicleType, vehicle.type, vehicle.name, raw.vehicleName, "—"),
+    notes: firstValue(raw.notes, raw.additionalNotes, raw.customerNotes, raw.mechanicDiagnosis, "—"),
+    diagnosis: firstValue(raw.mechanicDiagnosis, "—"),
+    quotation: firstValue(raw.repairQuotation, raw.quotedAmount, "—"),
+    latitude: firstValue(raw.latitude, raw.locationLatitude, "—"),
+    longitude: firstValue(raw.longitude, raw.locationLongitude, "—")
+  };
+}
+
+function authHeaders() {
+  const headers = { "Accept": "application/json" };
+  if (token) headers.Authorization = "Bearer " + token;
+  return headers;
+}
+
+async function apiRequest(path) {
+  const response = await fetch(API_BASE_URL + path, { method: "GET", headers: authHeaders() });
+  const text = await response.text();
+  let data = null;
+  if (text) {
+    try { data = JSON.parse(text); } catch { data = text; }
+  }
+  if (!response.ok) {
+    const message = typeof data === "string" ? data : (data && (data.message || data.error)) || `HTTP ${response.status}`;
+    if (response.status === 401 || response.status === 403) {
+      throw new Error(`Access denied (${response.status}). Please log in again with your admin account.`);
+    }
+    throw new Error(message);
+  }
+  return data;
+}
+
+function setConnectionNotice(message, isError = false) {
+  const notice = $("connectionNotice");
+  notice.style.background = isError ? "#fff0f2" : "#eef8ff";
+  notice.style.borderColor = isError ? "#f2c6ce" : "#cfe8ff";
+  notice.style.color = isError ? "#a52b36" : "#315d85";
+  notice.innerHTML = `<strong>${isError ? "Unable to load requests" : "Live database connection"}</strong> ${escapeHTML(message)}`;
+}
+
+function renderRequests() {
+  const query = $("searchInput").value.trim().toLowerCase();
+  const filter = $("statusFilter").value;
+
+  const filtered = requests.filter(request => {
+    const searchable = [request.id, request.customer, request.phone, request.service,
+      request.issue, request.location, request.mechanic, request.status]
+      .join(" ").toLowerCase();
+    return searchable.includes(query) && (filter === "all" || request.status === filter);
+  });
+
+  $("requestsBody").innerHTML = filtered.length
+    ? filtered.map(request => `
+      <tr>
+        <td><div class="request-id">ORV-${escapeHTML(request.id)}</div><div class="cell-sub">${escapeHTML(request.created)}</div></td>
+        <td><div class="cell-main">${escapeHTML(request.customer)}</div><div class="cell-sub">${escapeHTML(request.phone)}</div></td>
+        <td><div class="cell-main">${escapeHTML(request.service)}</div><div class="cell-sub">${escapeHTML(request.issue)}</div></td>
+        <td><div class="cell-main">${escapeHTML(request.location)}</div></td>
+        <td><div class="cell-main">${escapeHTML(request.mechanic)}</div><div class="cell-sub">${escapeHTML(request.mechanicPhone)}</div></td>
+        <td><span class="pill ${statusClasses[request.status] || "pending"}">${escapeHTML(statusLabels[request.status] || request.status.replaceAll("_", " "))}</span></td>
+        <td><button class="action-btn" onclick="viewRequest('${String(request.id).replace(/'/g, "\\'")}')">View details</button></td>
+      </tr>`).join("")
+    : `<tr><td colspan="7" class="empty">${requests.length ? "No requests match your search." : "No service requests found."}</td></tr>`;
+
+  $("totalCount").textContent = requests.length;
+  $("pendingCount").textContent = requests.filter(r => r.status === "PENDING").length;
+  $("activeCount").textContent = requests.filter(r => ["MECHANIC_ASSIGNED", "ACCEPTED", "ON_THE_WAY", "ARRIVED", "QUOTATION_PENDING", "ADMIN_REVIEW", "IN_PROGRESS"].includes(r.status)).length;
+  $("completedCount").textContent = requests.filter(r => r.status === "COMPLETED").length;
+}
+
+async function loadRequests() {
+  const button = $("refreshButton");
+  button.disabled = true;
+  button.textContent = "Loading...";
+  $("requestsBody").innerHTML = '<tr><td colspan="7" class="empty">Loading service requests...</td></tr>';
+  try {
+    if (!token) throw new Error("Admin login token was not found. Please log in again.");
+    const data = await apiRequest("/requests/admin-requests");
+    const list = Array.isArray(data) ? data :
+      (data && Array.isArray(data.content) ? data.content :
+      (data && Array.isArray(data.requests) ? data.requests : null));
+    if (!list) throw new Error("The backend did not return a request array. Check the API response format.");
+    requests = list.map(normalizeRequest).filter(r => r.id !== "—");
+    renderRequests();
+    setConnectionNotice(`${requests.length} service request(s) loaded from the backend.`);
+  } catch (error) {
+    requests = [];
+    renderRequests();
+    setConnectionNotice(error.message || "An unexpected error occurred.", true);
+    showToast(error.message || "Unable to load service requests.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Refresh requests";
+  }
+}
+
+function viewRequest(id) {
+  const request = requests.find(r => String(r.id) === String(id));
+  if (!request) return;
+  $("modalTitle").textContent = "Request ORV-" + request.id;
+  const fields = [
+    ["Customer", request.customer], ["Contact", request.phone], ["Vehicle type", request.vehicle],
+    ["Requested service", request.service], ["Location", request.location],
+    ["Assigned mechanic", request.mechanic], ["Mechanic contact", request.mechanicPhone],
+    ["Request created", request.created], ["Current status", statusLabels[request.status] || request.status],
+    ["Reported issue", request.issue, "full"], ["Mechanic diagnosis", request.diagnosis, "full"],
+    ["Repair quotation", request.quotation], ["Additional notes", request.notes, "full"],
+    ["Latitude", request.latitude], ["Longitude", request.longitude]
+  ];
+  $("detailGrid").innerHTML = fields.map(([label, value, className]) => `
+    <div class="detail ${className || ""}"><label>${escapeHTML(label)}</label><strong>${escapeHTML(value)}</strong></div>`).join("");
+  const steps = [
+    ["Request submitted", request.created],
+    ["Mechanic assignment", request.mechanic === "Not assigned" ? "Awaiting assignment." : "Assigned mechanic: " + request.mechanic],
+    ["Current status", statusLabels[request.status] || request.status.replaceAll("_", " ")]
+  ];
+  $("timeline").innerHTML = steps.map(([title, description]) => `<p><strong>${escapeHTML(title)}</strong><br>${escapeHTML(description)}</p>`).join("");
+  $("requestModal").classList.add("show");
+}
+
+function closeModal() {
+  $("requestModal").classList.remove("show");
+}
+
+function showToast(message) {
+  $("toast").textContent = message;
+  $("toast").classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("toast").classList.remove("show"), 3000);
+}
+
+$("searchInput").addEventListener("input", renderRequests);
+$("statusFilter").addEventListener("change", renderRequests);
+
+$("requestModal").addEventListener("click", event => {
+  if (event.target === $("requestModal")) closeModal();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeModal();
+});
+
+function logout() {
+  ["orvbaToken", "orvbaUsername", "username"].forEach(key => {
+    sessionStorage.removeItem(key);
+    localStorage.removeItem(key);
+  });
+
+  window.location.href = "../login.html";
+}
+
+loadRequests();
+</script>
+</body>
+</html>

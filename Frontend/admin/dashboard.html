@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | ORVBA Admin</title>
+
+<style>
+:root {
+    --navy: #101b3b;
+    --blue: #356dff;
+    --cyan: #37c9e8;
+    --bg: #f4f7fc;
+    --text: #1b2540;
+    --muted: #71809c;
+    --line: #e5eaf3;
+    --green: #138a61;
+    --shadow: 0 12px 32px rgba(24,41,82,.07);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--text);
+}
+
+button, a { font: inherit; }
+button { cursor: pointer; }
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 250px;
+    padding: 25px 16px;
+    background: linear-gradient(175deg, var(--navy), #0b142d);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 10px 28px;
+    border-bottom: 1px solid #ffffff18;
+}
+
+.brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.brand strong { font-size: 17px; }
+
+.brand small {
+    display: block;
+    color: #a9b8d7;
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+.nav-label {
+    margin: 25px 12px 10px;
+    color: #7f91b7;
+    font-size: 10px;
+    letter-spacing: 1.7px;
+}
+
+.nav { display: grid; gap: 6px; }
+
+.nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 13px;
+    color: #b7c3dc;
+    text-decoration: none;
+    border-radius: 11px;
+    font-size: 13px;
+    transition: .2s;
+}
+
+.nav a:hover,
+.nav a.active {
+    background: #ffffff13;
+    color: white;
+}
+
+.nav a.active {
+    box-shadow: inset 3px 0 var(--cyan);
+}
+
+.ico { width: 20px; text-align: center; }
+
+.side-bottom {
+    margin-top: auto;
+    padding: 15px 12px;
+    border-radius: 12px;
+    background: #ffffff0d;
+    color: #aab8d3;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.side-bottom strong {
+    display: block;
+    color: white;
+    margin-bottom: 4px;
+}
+
+/* Main area */
+.main {
+    margin-left: 250px;
+    padding: 27px 34px 40px;
+    max-width: 1600px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 26px;
+}
+
+.title-row { display: flex; align-items: center; gap: 12px; }
+
+.eyebrow {
+    color: var(--blue);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 800;
+}
+
+h1 {
+    margin: 6px 0 0;
+    font-size: 27px;
+    letter-spacing: -.7px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    border-radius: 13px;
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: #e7efff;
+    color: var(--blue);
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+}
+
+.profile strong { display: block; font-size: 12px; }
+.profile small { color: var(--muted); font-size: 11px; }
+
+/* Hero banner */
+.hero {
+    background: linear-gradient(115deg, #172b59, #234a91 65%, #1b8ca9);
+    color: white;
+    padding: 26px 28px;
+    border-radius: 20px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero h2 {
+    margin: 0 0 9px;
+    font-size: 23px;
+}
+
+.hero p {
+    margin: 0;
+    color: #d4e1ff;
+    font-size: 13px;
+    max-width: 650px;
+    line-height: 1.7;
+}
+
+/* Statistics */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.stat, .panel {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 17px;
+    box-shadow: var(--shadow);
+}
+
+.stat { padding: 19px; }
+
+.stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.stat-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 11px;
+    background: #edf3ff;
+    display: grid;
+    place-items: center;
+    color: var(--blue);
+    font-size: 17px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    margin-top: 12px;
+}
+
+.stat small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+/* Content cards */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.panel { padding: 22px; }
+
+.panel-head { margin-bottom: 18px; }
+
+.panel h3 { font-size: 16px; margin: 0; }
+
+.sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #edf0f6;
+}
+
+.action-row:last-child { border-bottom: 0; }
+
+.action-row strong {
+    display: block;
+    font-size: 12px;
+}
+
+.action-row p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+    margin: 5px 0 0;
+}
+
+.action-link {
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.action-link:hover { color: #1747cc; }
+
+.pill {
+    display: inline-flex;
+    border-radius: 30px;
+    padding: 6px 9px;
+    font-size: 10px;
+    font-weight: 800;
+    background: #eaf1ff;
+    color: #315dc8;
+}
+
+.demo-note {
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    background: #fff8e9;
+    border: 1px solid #f5e6bd;
+    padding: 14px;
+    border-radius: 13px;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #8a641f;
+    margin-top: 16px;
+}
+
+.demo-note strong {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.btn {
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 750;
+    color: white;
+    background: linear-gradient(110deg, var(--blue), #418bff);
+    box-shadow: 0 6px 14px #356dff25;
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+.mobile-menu, .sidebar-backdrop { display: none; }
+
+/* Responsive layout */
+@media (max-width: 1150px) {
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .main { padding: 24px; }
+}
+
+@media (max-width: 760px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform .25s;
+    }
+
+    .sidebar.open { transform: translateX(0); }
+
+    .sidebar-backdrop.show {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: #08132d80;
+        z-index: 9;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 18px 14px 30px;
+    }
+
+    .topbar { align-items: flex-start; }
+    h1 { font-size: 23px; }
+    .profile { display: none; }
+
+    .mobile-menu {
+        display: inline-grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 11px;
+    }
+
+    .hero { padding: 22px; }
+    .hero h2 { font-size: 20px; }
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .stat { padding: 14px; }
+}
+
+@media (max-width: 420px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat-top { font-size: 10px; }
+    .stat-icon { width: 30px; height: 30px; }
+    .panel { padding: 16px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar-backdrop" id="sidebarBackdrop"
+     onclick="toggleSidebar(false)"></div>
+
+<aside class="sidebar" id="sidebar">
+    <div class="brand">
+        <div class="brand-mark">O</div>
+        <div>
+            <strong>ORVBA</strong>
+            <small>ADMIN CONTROL CENTER</small>
+        </div>
+    </div>
+
+    <div class="nav-label">WORKSPACE</div>
+
+    <nav class="nav">
+        <a class="active" href="dashboard.html">
+            <span class="ico">▦</span> Dashboard
+        </a>
+        <a href="mechanics.html">
+            <span class="ico">♙</span> Mechanics
+        </a>
+        <a href="services.html">
+            <span class="ico">⚙</span> Services & Pricing
+        </a>
+        <a href="requests.html">
+            <span class="ico">▤</span> Service Requests
+        </a>
+        <a href="charges.html">
+            <span class="ico">₹</span> Charge Review
+        </a>
+    </nav>
+
+    <div class="nav-label">ACCOUNT</div>
+
+    <nav class="nav">
+        <a href="#" onclick="logout(); return false;">
+            <span class="ico">↪</span> Logout
+        </a>
+    </nav>
+
+    <div class="side-bottom">
+        <strong>One clear workspace.</strong>
+        Verify mechanics, manage services, track requests, and review
+        exceptional charges.
+    </div>
+</aside>
+
+<main class="main">
+
+    <header class="topbar">
+        <div class="title-row">
+            <button class="mobile-menu" onclick="toggleSidebar(true)"
+                    aria-label="Open menu">☰</button>
+            <div>
+                <div class="eyebrow">Admin workspace / Overview</div>
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+
+        <div class="profile">
+            <div class="avatar">A</div>
+            <div>
+                <strong id="adminName">Administrator</strong>
+                <small>System admin</small>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>Keep ORVBA running smoothly.</h2>
+        <p>
+            A live overview of mechanic verification, configured services,
+            service requests, and quotations awaiting an admin decision.
+        </p>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <div class="stat-top">
+                Pending mechanics <span class="stat-icon">♙</span>
+            </div>
+            <strong id="pendingMechanicsCount">—</strong>
+            <small>Profiles awaiting verification</small>
+        </div>
+
+        <div class="stat">
+            <div class="stat-top">
+                Services configured <span class="stat-icon">⚙</span>
+            </div>
+            <strong id="servicesCount">—</strong>
+            <small>Services available in the system</small>
+        </div>
+
+        <div class="stat">
+            <div class="stat-top">
+                Service requests <span class="stat-icon">▤</span>
+            </div>
+            <strong id="requestsCount">—</strong>
+            <small>Requests across the platform</small>
+        </div>
+
+        <div class="stat">
+            <div class="stat-top">
+                Charge reviews <span class="stat-icon">₹</span>
+            </div>
+            <strong id="chargeReviewsCount">—</strong>
+            <small>Quotations awaiting admin review</small>
+        </div>
+    </section>
+
+        <section class="dashboard-grid">
+
+        <div class="panel">
+            <div class="panel-head">
+                <h3>Workspace shortcuts</h3>
+                <div class="sub">
+                    Open a section to manage ORVBA operations.
+                </div>
+            </div>
+
+            <div class="action-row">
+                <div>
+                    <strong>Mechanic verification</strong>
+                    <p>Review registrations and approve or reject profiles.</p>
+                </div>
+                <a class="action-link" href="mechanics.html">Open →</a>
+            </div>
+
+            <div class="action-row">
+                <div>
+                    <strong>Services & Pricing</strong>
+                    <p>Maintain standard service prices and maximum charges.</p>
+                </div>
+                <a class="action-link" href="services.html">Open →</a>
+            </div>
+
+            <div class="action-row">
+                <div>
+                    <strong>Service requests</strong>
+                    <p>Track requests and their current workflow status.</p>
+                </div>
+                <a class="action-link" href="requests.html">Open →</a>
+            </div>
+
+            <div class="action-row">
+                <div>
+                    <strong>Charge review</strong>
+                    <p>Review quotations requiring an admin decision.</p>
+                </div>
+                <a class="action-link" href="charges.html">Open →</a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-head">
+                <h3>Admin checklist</h3>
+                <div class="sub">
+                    Key operational areas to keep an eye on.
+                </div>
+            </div>
+
+            <div class="action-row">
+                <div>
+                    <strong>1. Verify mechanics</strong>
+                    <p>Only approved mechanics should receive service requests.</p>
+                </div>
+                <span class="stat-icon">✓</span>
+            </div>
+
+            <div class="action-row">
+                <div>
+                    <strong>2. Keep pricing transparent</strong>
+                    <p>Use standard and maximum prices to guide fair charges.</p>
+                </div>
+                <span class="stat-icon">₹</span>
+            </div>
+
+            <div class="action-row">
+                <div>
+                    <strong>3. Review exceptional charges</strong>
+                    <p>Review proposed amounts according to project rules.</p>
+                </div>
+                <span class="stat-icon">⌕</span>
+            </div>
+
+ 
+            <button class="btn" type="button" onclick="loadDashboard()">Refresh dashboard</button>
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+const API_BASE_URL = "http://localhost:8080";
+
+function toggleSidebar(open) {
+    document.getElementById("sidebar").classList.toggle("open", open);
+    document.getElementById("sidebarBackdrop").classList.toggle("show", open);
+}
+
+function logout() {
+    sessionStorage.removeItem("orvbaToken");
+    sessionStorage.removeItem("orvbaUsername");
+    sessionStorage.removeItem("username");
+    localStorage.removeItem("orvbaToken");
+    localStorage.removeItem("orvbaUsername");
+    localStorage.removeItem("username");
+    window.location.href = "../login.html";
+}
+
+const adminName =
+    sessionStorage.getItem("orvbaUsername") ||
+    sessionStorage.getItem("username") ||
+    localStorage.getItem("orvbaUsername") ||
+    localStorage.getItem("username");
+
+if (adminName) {
+    document.getElementById("adminName").textContent = adminName;
+}
+
+function getToken() {
+    return sessionStorage.getItem("orvbaToken") ||
+           localStorage.getItem("orvbaToken") || "";
+}
+
+async function apiGet(path) {
+    const token = getToken();
+    const response = await fetch(API_BASE_URL + path, {
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            ...(token ? { "Authorization": "Bearer " + token } : {})
+        }
+    });
+
+    if (!response.ok) {
+        const body = await response.text().catch(() => "");
+        throw new Error(path + " returned HTTP " + response.status +
+            (body ? ": " + body.slice(0, 160) : ""));
+    }
+
+    return response.json();
+}
+
+function asArray(value) {
+    if (Array.isArray(value)) return value;
+    if (value && Array.isArray(value.content)) return value.content;
+    if (value && Array.isArray(value.data)) return value.data;
+    return [];
+}
+
+function statusOf(request) {
+    return String(request?.status ?? request?.requestStatus ?? "").toUpperCase();
+}
+
+async function loadDashboard() {
+    const ids = ["pendingMechanicsCount", "servicesCount", "requestsCount", "chargeReviewsCount"];
+    ids.forEach(id => document.getElementById(id).textContent = "…");
+
+    const note = document.getElementById("connectionNote");
+    note.innerHTML = "<span>ⓘ</span><div><strong>Loading dashboard</strong>Fetching the latest figures from the backend.</div>";
+
+    const results = await Promise.allSettled([
+        apiGet("/admin/mechanics/pending"),
+        apiGet("/admin/services"),
+        apiGet("/requests/admin-requests")
+    ]);
+
+    let errors = [];
+
+    if (results[0].status === "fulfilled") {
+        document.getElementById("pendingMechanicsCount").textContent =
+            asArray(results[0].value).length;
+    } else {
+        document.getElementById("pendingMechanicsCount").textContent = "—";
+        errors.push("pending mechanics");
+        console.error("Could not load pending mechanics:", results[0].reason);
+    }
+
+    if (results[1].status === "fulfilled") {
+        document.getElementById("servicesCount").textContent =
+            asArray(results[1].value).length;
+    } else {
+        document.getElementById("servicesCount").textContent = "—";
+        errors.push("services");
+        console.error("Could not load services:", results[1].reason);
+    }
+
+    if (results[2].status === "fulfilled") {
+        const requests = asArray(results[2].value);
+        document.getElementById("requestsCount").textContent = requests.length;
+        document.getElementById("chargeReviewsCount").textContent =
+            requests.filter(request => statusOf(request) === "ADMIN_REVIEW").length;
+    } else {
+        document.getElementById("requestsCount").textContent = "—";
+        document.getElementById("chargeReviewsCount").textContent = "—";
+        errors.push("service requests and charge reviews");
+        console.error("Could not load requests:", results[2].reason);
+    }
+
+    if (errors.length) {
+        note.innerHTML = "<span>ⓘ</span><div><strong>Some figures could not be loaded</strong>" +
+            "Check that the backend is running, your admin token is valid, and the APIs are available: " +
+            errors.join(", ") + ". See the browser console for details.</div>";
+    } else {
+        note.innerHTML = "<span>✓</span><div><strong>Dashboard connected</strong>" +
+            "All figures were loaded from the ORVBA backend successfully.</div>";
+    }
+}
+
+loadDashboard();
+</script>
+
+</body>
+</html>
+

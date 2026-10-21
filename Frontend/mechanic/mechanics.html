@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mechanics | ORVBA Admin</title>
+<style>
+:root {
+    --navy:#101b3b; --blue:#356dff; --cyan:#37c9e8;
+    --bg:#f4f7fc; --text:#1b2540; --muted:#71809c;
+    --line:#e5eaf3; --green:#138a61; --red:#d84455;
+    --shadow:0 12px 32px rgba(24,41,82,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:"Segoe UI",Arial,sans-serif;color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.sidebar{position:fixed;inset:0 auto 0 0;width:250px;padding:25px 16px;background:linear-gradient(175deg,var(--navy),#0b142d);color:white;display:flex;flex-direction:column;z-index:10}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px 28px;border-bottom:1px solid #ffffff18}
+.brand-mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--cyan));font-size:19px;font-weight:900}
+.brand strong{font-size:17px}
+.brand small{display:block;color:#a9b8d7;font-size:10px;margin-top:4px}
+.nav-label{margin:25px 12px 10px;color:#7f91b7;font-size:10px;letter-spacing:1.7px}
+.nav{display:grid;gap:6px}
+.nav a{display:flex;align-items:center;gap:12px;padding:12px 13px;color:#b7c3dc;text-decoration:none;border-radius:11px;font-size:13px;transition:.2s}
+.nav a:hover,.nav a.active{background:#ffffff13;color:white}
+.nav a.active{box-shadow:inset 3px 0 var(--cyan)}
+.ico{width:20px;text-align:center}
+.side-bottom{margin-top:auto;padding:15px 12px;border-radius:12px;background:#ffffff0d;color:#aab8d3;font-size:12px;line-height:1.6}
+.side-bottom strong{display:block;color:white;margin-bottom:4px}
+.main{margin-left:250px;padding:27px 34px 40px;max-width:1600px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}
+.title-row{display:flex;align-items:center;gap:12px}
+.eyebrow{color:var(--blue);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;font-weight:800}
+h1{margin:6px 0 0;font-size:27px;letter-spacing:-.7px}
+.profile{display:flex;align-items:center;gap:10px;background:white;border:1px solid var(--line);padding:8px 12px;border-radius:13px}
+.avatar{width:34px;height:34px;border-radius:10px;background:#e7efff;color:var(--blue);display:grid;place-items:center;font-weight:800}
+.profile strong{display:block;font-size:12px}
+.profile small{color:var(--muted);font-size:11px}
+.hero{background:linear-gradient(115deg,#172b59,#234a91 65%,#1b8ca9);color:white;padding:26px 28px;border-radius:20px;margin-bottom:22px;box-shadow:var(--shadow)}
+.hero h2{margin:0 0 9px;font-size:23px}
+.hero p{margin:0;color:#d4e1ff;font-size:13px;max-width:700px;line-height:1.7}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:22px}
+.stat,.panel{background:white;border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}
+.stat{padding:19px}
+.stat-top{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:12px}
+.stat-icon{width:35px;height:35px;border-radius:11px;background:#edf3ff;display:grid;place-items:center;color:var(--blue);font-size:17px}
+.stat strong{display:block;font-size:28px;margin-top:12px}
+.stat small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+.panel{padding:22px}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.panel h3{font-size:16px;margin:0}
+.sub{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:750;color:white;background:linear-gradient(110deg,var(--blue),#418bff);box-shadow:0 6px 14px #356dff25}
+.btn:hover{transform:translateY(-1px)}
+.btn-danger{background:linear-gradient(110deg,#d84455,#ef6571);box-shadow:0 6px 14px #d8445520}
+.icon-btn{border:1px solid var(--line);background:white;color:var(--text);padding:8px 10px;border-radius:9px;font-size:11px;font-weight:750}
+.icon-btn:hover{border-color:#9bb5ff;color:var(--blue)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:17px}
+.field{min-height:42px;border:1px solid #dfe6f1;background:white;border-radius:10px;padding:10px 12px;color:var(--text);outline:none;font-size:12px}
+.field:focus{border-color:var(--blue);box-shadow:0 0 0 3px #356dff18}
+.search{flex:1;min-width:220px}
+.select{min-width:155px}
+.table-wrap{width:100%;overflow-x:auto}
+table{width:100%;border-collapse:collapse;white-space:nowrap}
+th{text-align:left;padding:12px;background:#f7f9fd;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.6px;font-weight:800}
+td{padding:14px 12px;border-bottom:1px solid #edf0f6;font-size:12px}
+tbody tr:hover{background:#fbfcff}
+.cell-main{font-weight:750;font-size:12px}
+.cell-sub{font-size:10px;color:var(--muted);margin-top:5px}
+.pill{display:inline-flex;border-radius:30px;padding:6px 9px;font-size:10px;font-weight:800;text-transform:capitalize}
+.pill.pending{background:#fff5df;color:#a86a0a}
+.pill.approved{background:#e5f8f0;color:var(--green)}
+.pill.rejected{background:#fff0f2;color:var(--red)}
+.actions{display:flex;align-items:center;gap:6px}
+.empty{text-align:center;color:var(--muted);padding:30px}
+.footer-note{color:var(--muted);font-size:11px;margin-top:15px}
+.demo-note{display:flex;gap:11px;align-items:flex-start;background:#fff8e9;border:1px solid #f5e6bd;padding:14px;border-radius:13px;font-size:11px;line-height:1.6;color:#8a641f;margin-bottom:18px}
+.demo-note strong{display:block;margin-bottom:3px}
+.modal-backdrop{display:none;position:fixed;inset:0;background:#08132d80;z-index:20;padding:20px;align-items:center;justify-content:center}
+.modal-backdrop.show{display:flex}
+.modal{width:min(100%,600px);max-height:90vh;overflow:auto;background:white;border-radius:18px;padding:24px;box-shadow:0 25px 80px #07132c35}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:20px}
+.modal-head h3{margin:0;font-size:18px}
+.close{width:34px;height:34px;border:1px solid var(--line);border-radius:10px;background:white;font-size:22px;color:var(--muted)}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.detail{padding:13px;border:1px solid var(--line);border-radius:12px;background:#fbfcff}
+.detail label{font-size:10px;color:var(--muted);display:block;margin-bottom:6px}
+.detail strong{font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.modal-actions{display:flex;gap:9px;margin-top:20px;flex-wrap:wrap}
+.toast{position:fixed;bottom:22px;right:22px;max-width:calc(100% - 44px);padding:13px 18px;background:var(--navy);color:white;border-radius:11px;font-size:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;z-index:30}
+.toast.show{opacity:1;transform:translateY(0)}
+.mobile-menu{display:none}
+.sidebar-backdrop{display:none}
+@media(max-width:1150px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.main{padding:24px}}
+@media(max-width:760px){
+.sidebar{transform:translateX(-100%);transition:transform .25s}
+.sidebar.open{transform:translateX(0)}
+.sidebar-backdrop.show{display:block;position:fixed;inset:0;background:#08132d80;z-index:9}
+.main{margin-left:0;padding:18px 14px 30px}
+.topbar{align-items:flex-start}h1{font-size:23px}.profile{display:none}
+.mobile-menu{display:inline-grid;place-items:center;width:40px;height:40px;border:1px solid var(--line);background:white;border-radius:11px}
+.hero{padding:22px}.hero h2{font-size:20px}.panel{padding:16px}
+.panel-head{align-items:flex-start;flex-wrap:wrap}
+}
+@media(max-width:480px){.stats{grid-template-columns:1fr 1fr}.stat{padding:13px}.stat-top{font-size:10px}.stat strong{font-size:23px}.detail-grid{grid-template-columns:1fr}}
+</style>
+</head>
+
+<body>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar(false)"></div>
+
+<aside class="sidebar" id="sidebar">
+    <div class="brand">
+        <div class="brand-mark">O</div>
+        <div><strong>ORVBA</strong><small>ADMIN CONTROL CENTER</small></div>
+    </div>
+
+    <div class="nav-label">WORKSPACE</div>
+    <nav class="nav">
+        <a href="dashboard.html"><span class="ico">▦</span>Dashboard</a>
+        <a class="active" href="mechanics.html"><span class="ico">♙</span>Mechanics</a>
+        <a href="services.html"><span class="ico">⚙</span>Services & Pricing</a>
+        <a href="requests.html"><span class="ico">▤</span>Service Requests</a>
+        <a href="charges.html"><span class="ico">₹</span>Charge Review</a>
+    </nav>
+
+    <div class="nav-label">ACCOUNT</div>
+    <nav class="nav">
+        <a href="#" onclick="logout();return false"><span class="ico">↪</span>Logout</a>
+    </nav>
+
+    <div class="side-bottom">
+        <strong>Trust starts with verification.</strong>
+        Approve qualified mechanics before they receive service requests.
+    </div>
+</aside>
+
+<main class="main">
+    <header class="topbar">
+        <div class="title-row">
+            <button class="mobile-menu" onclick="toggleSidebar(true)" aria-label="Open menu">☰</button>
+            <div><div class="eyebrow">Admin workspace / Verification</div><h1>Mechanics</h1></div>
+        </div>
+        <div class="profile">
+            <div class="avatar">A</div>
+            <div><strong id="adminName">Administrator</strong><small>System admin</small></div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>Verify the people behind every rescue.</h2>
+        <p>Review mechanic registrations and keep unapproved profiles from accessing restricted work.</p>
+    </section>
+
+    <section class="stats">
+        <div class="stat"><div class="stat-top">Total mechanics <span class="stat-icon">♙</span></div><strong id="totalCount">0</strong><small>Profiles in this demo list</small></div>
+        <div class="stat"><div class="stat-top">Pending review <span class="stat-icon">◷</span></div><strong id="pendingCount">0</strong><small>Awaiting administrator decision</small></div>
+        <div class="stat"><div class="stat-top">Approved <span class="stat-icon">✓</span></div><strong id="approvedCount">0</strong><small>Approved in this demo</small></div>
+        <div class="stat"><div class="stat-top">Rejected <span class="stat-icon">×</span></div><strong id="rejectedCount">0</strong><small>Rejected in this demo</small></div>
+    </section>
+
+    <div class="demo-note">
+        <span>ⓘ</span>
+        <div><strong>Demo data — not connected to your database</strong>
+        The profiles and status changes below are examples only. We will connect the real approval and rejection APIs after confirming their request and response formats.</div>
+    </div>
+
+    <section class="panel">
+        <div class="panel-head">
+            <div><h3>Mechanic verification</h3><div class="sub">Search profiles and review registration status.</div></div>
+            <button class="btn" onclick="resetDemo()">Reset demo</button>
+        </div>
+
+        <div class="toolbar">
+            <input class="field search" id="searchInput" placeholder="Search name, username or specialization...">
+            <select class="field select" id="statusFilter">
+                <option value="all">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+            </select>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Mechanic</th><th>Specialization</th><th>Experience</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="mechanicsBody"></tbody>
+            </table>
+        </div>
+        <div class="footer-note">Sample profiles only. Actions do not update MySQL.</div>
+    </section>
+</main>
+
+<div class="modal-backdrop" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+    <div class="modal">
+        <div class="modal-head">
+            <div><h3 id="detailTitle">Mechanic details</h3><div class="sub">Sample registration information.</div></div>
+            <button class="close" onclick="closeDetails()" aria-label="Close">×</button>
+        </div>
+        <div class="detail-grid" id="detailGrid"></div>
+        <div class="modal-actions" id="detailActions"></div>
+    </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const mechanics = [
+    {id:1,name:"Arun Kumar",username:"arun.k",specialization:"Two-Wheeler",experience:"4–6 years",location:"Pune",phone:"9876543210",email:"arun.demo@example.com",status:"pending",proof:"Driving Licence",proofNumber:"DL-DEMO-1024"},
+    {id:2,name:"Priya Sharma",username:"priya.s",specialization:"Four-Wheeler",experience:"7–10 years",location:"Hinjewadi",phone:"9876501234",email:"priya.demo@example.com",status:"pending",proof:"Aadhaar",proofNumber:"XXXX-XXXX-4821"},
+    {id:3,name:"Rahul Patil",username:"rahul.p",specialization:"Both",experience:"More than 10 years",location:"Wakad",phone:"9876512340",email:"rahul.demo@example.com",status:"approved",proof:"Driving Licence",proofNumber:"DL-DEMO-2088"},
+    {id:4,name:"Sanjay Rao",username:"sanjay.r",specialization:"Electrical",experience:"1–3 years",location:"Baner",phone:"9876523401",email:"sanjay.demo@example.com",status:"rejected",proof:"Voter ID",proofNumber:"DEMO-VOTER-331"}
+];
+
+const originalMechanics = mechanics.map(m => ({...m}));
+let toastTimer;
+
+function esc(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    })[char]);
+}
+
+function showToast(message) {
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+}
+
+function renderMechanics() {
+    const query = $("searchInput").value.trim().toLowerCase();
+    const filter = $("statusFilter").value;
+
+    const rows = mechanics.filter(m =>
+        (filter === "all" || m.status === filter) &&
+        [m.name,m.username,m.specialization,m.location]
+            .some(value => value.toLowerCase().includes(query))
+    );
+
+    $("mechanicsBody").innerHTML = rows.length ? rows.map(m => `
+        <tr>
+            <td><div class="cell-main">${esc(m.name)}</div>
+                <div class="cell-sub">@${esc(m.username)} · ${esc(m.phone)}</div></td>
+            <td>${esc(m.specialization)}</td>
+            <td>${esc(m.experience)}</td>
+            <td>${esc(m.location)}</td>
+            <td><span class="pill ${m.status}">${esc(m.status)}</span></td>
+            <td><div class="actions">
+                <button class="icon-btn" onclick="viewDetails(${m.id})">View</button>
+                ${m.status === "pending" ? `
+                    <button class="btn" onclick="changeStatus(${m.id},'approved')">Approve</button>
+                    <button class="icon-btn" onclick="changeStatus(${m.id},'rejected')">Reject</button>
+                ` : ""}
+            </div></td>
+        </tr>
+    `).join("") : `<tr><td colspan="6" class="empty">No mechanics match your search.</td></tr>`;
+
+    $("totalCount").textContent = mechanics.length;
+    $("pendingCount").textContent = mechanics.filter(m => m.status === "pending").length;
+    $("approvedCount").textContent = mechanics.filter(m => m.status === "approved").length;
+    $("rejectedCount").textContent = mechanics.filter(m => m.status === "rejected").length;
+}
+
+function viewDetails(id) {
+    const mechanic = mechanics.find(m => m.id === id);
+    if (!mechanic) return;
+
+    $("detailTitle").textContent = mechanic.name;
+
+    const details = [
+        ["Username",mechanic.username],
+        ["Phone",mechanic.phone],
+        ["Email",mechanic.email],
+        ["Specialization",mechanic.specialization],
+        ["Experience",mechanic.experience],
+        ["Location",mechanic.location],
+        ["Identity proof",mechanic.proof],
+        ["Proof number",mechanic.proofNumber],
+        ["Status",mechanic.status]
+    ];
+
+    $("detailGrid").innerHTML = details.map(([label,value]) => `
+        <div class="detail"><label>${esc(label)}</label><strong>${esc(value)}</strong></div>
+    `).join("");
+
+    $("detailActions").innerHTML = mechanic.status === "pending" ? `
+        <button class="btn" onclick="changeStatus(${mechanic.id},'approved');closeDetails()">Approve mechanic</button>
+        <button class="btn btn-danger" onclick="changeStatus(${mechanic.id},'rejected');closeDetails()">Reject mechanic</button>
+    ` : "";
+
+    $("detailModal").classList.add("show");
+}
+
+function closeDetails() {
+    $("detailModal").classList.remove("show");
+}
+
+function changeStatus(id, status) {
+    const mechanic = mechanics.find(m => m.id === id);
+    if (!mechanic) return;
+
+    const action = status === "approved" ? "Approve" : "Reject";
+    if (!confirm(`${action} ${mechanic.name}? This only changes demo data.`)) return;
+
+    mechanic.status = status;
+    renderMechanics();
+    showToast(`${mechanic.name} marked ${status}. Demo only.`);
+}
+
+function resetDemo() {
+    mechanics.splice(0, mechanics.length, ...originalMechanics.map(m => ({...m})));
+    renderMechanics();
+    showToast("Demo statuses reset.");
+}
+
+function toggleSidebar(open) {
+    $("sidebar").classList.toggle("open", open);
+    $("sidebarBackdrop").classList.toggle("show", open);
+}
+
+function logout() {
+    ["orvbaToken","orvbaUsername","username"].forEach(key => {
+        sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
+    });
+    window.location.href = "../login.html";
+}
+
+$("searchInput").addEventListener("input", renderMechanics);
+$("statusFilter").addEventListener("change", renderMechanics);
+$("detailModal").addEventListener("click", event => {
+    if (event.target === $("detailModal")) closeDetails();
+});
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeDetails();
+});
+
+const adminName =
+    sessionStorage.getItem("orvbaUsername") ||
+    sessionStorage.getItem("username") ||
+    localStorage.getItem("orvbaUsername") ||
+    localStorage.getItem("username");
+
+if (adminName) $("adminName").textContent = adminName;
+
+renderMechanics();
+</script>
+</body>
+</html>
+

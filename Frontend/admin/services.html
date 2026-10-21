@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services & Pricing | ORVBA Admin</title>
+<style>
+:root {
+  --navy: #101b3b;
+  --blue: #356dff;
+  --cyan: #37c9e8;
+  --bg: #f4f7fc;
+  --text: #1b2540;
+  --muted: #71809c;
+  --line: #e5eaf3;
+  --green: #138a61;
+  --red: #c43d52;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 245px;
+  padding: 25px 16px;
+  color: white;
+  background: linear-gradient(175deg, var(--navy), #0b142d);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 25px;
+  border-bottom: 1px solid #ffffff20;
+}
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  font-weight: 900;
+  font-size: 20px;
+}
+.brand small {
+  display: block;
+  color: #a9b8d7;
+  margin-top: 4px;
+  font-size: 10px;
+}
+.nav-heading {
+  margin: 25px 12px 10px;
+  color: #8293b8;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+.nav a {
+  display: block;
+  margin: 5px 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #c0cbe0;
+  font-size: 13px;
+}
+.nav a:hover, .nav a.active {
+  background: #ffffff15;
+  color: white;
+}
+.nav a.active { border-left: 3px solid var(--cyan); }
+.sidebar-note {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  right: 25px;
+  color: #aab8d3;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.sidebar-note strong { color: white; display: block; }
+
+.main {
+  margin-left: 245px;
+  padding: 28px;
+  max-width: 1600px;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+.eyebrow {
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+h1 { margin: 7px 0 0; font-size: 28px; }
+.admin {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+  font-size: 12px;
+}
+.hero {
+  padding: 27px;
+  margin-bottom: 22px;
+  border-radius: 19px;
+  color: white;
+  background: linear-gradient(115deg, #172b59, #234a91 65%, #1b8ca9);
+}
+.hero h2 { margin: 0 0 10px; font-size: 23px; }
+.hero p {
+  margin: 0;
+  color: #d4e1ff;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 22px;
+}
+.stat, .panel {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 10px 28px #1829520a;
+}
+.stat { padding: 18px; }
+.stat-label { color: var(--muted); font-size: 12px; }
+.stat strong { display: block; margin-top: 12px; font-size: 27px; }
+.stat small { color: var(--muted); font-size: 11px; }
+.panel { padding: 22px; }
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+h3 { margin: 0; font-size: 16px; }
+.sub { color: var(--muted); font-size: 12px; margin-top: 6px; }
+
+.btn {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.primary {
+  color: white;
+  background: linear-gradient(110deg, var(--blue), #418bff);
+}
+.secondary { color: #2855bb; background: #edf3ff; }
+.outline {
+  color: #52617c;
+  background: white;
+  border: 1px solid var(--line);
+}
+.toolbar { display: flex; gap: 10px; margin-bottom: 15px; }
+.field {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #dfe6f1;
+  border-radius: 9px;
+  background: white;
+  outline: none;
+  font-size: 12px;
+}
+.field:focus { border-color: #83a4ff; }
+.search { flex: 1; min-width: 150px; }
+.filter { width: 150px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 650px; }
+th {
+  padding: 13px 12px;
+  text-align: left;
+  color: #7b88a2;
+  background: #f8faff;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+}
+td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #edf0f6;
+  font-size: 12px;
+}
+.service-name { font-weight: 750; }
+.service-category { margin-top: 5px; color: var(--muted); font-size: 10px; }
+.price { font-weight: 800; white-space: nowrap; }
+.pill {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+}
+.active { background: #e5f8f0; color: var(--green); }
+.inactive { background: #fff0f2; color: var(--red); }
+.actions { display: flex; gap: 6px; }
+.action-btn {
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: white;
+  color: #52617c;
+  font-size: 11px;
+}
+.note {
+  margin-top: 18px;
+  padding: 13px;
+  border: 1px solid #f5e6bd;
+  border-radius: 11px;
+  background: #fff8e9;
+  color: #8a641f;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.empty { padding: 24px; text-align: center; color: var(--muted); }
+
+.modal-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  padding: 18px;
+  background: #0a153b70;
+  align-items: center;
+  justify-content: center;
+}
+.modal-bg.show { display: flex; }
+.modal {
+  width: min(520px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+  border-radius: 17px;
+  background: white;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.close {
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 11px;
+  font-size: 20px;
+  background: #f1f4fa;
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 750;
+}
+.full { grid-column: 1 / -1; }
+textarea { resize: vertical; min-height: 75px; }
+.form-actions { display: flex; gap: 9px; margin-top: 18px; }
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  padding: 13px 18px;
+  border-radius: 10px;
+  color: white;
+  background: #14264e;
+  font-size: 12px;
+  display: none;
+  z-index: 30;
+}
+.toast.show { display: block; }
+
+@media(max-width:1100px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media(max-width:760px) {
+  .sidebar { position: static; width: auto; padding: 16px; }
+  .nav-heading, .sidebar-note { display: none; }
+  .nav { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 15px; }
+  .nav a { padding: 9px; margin: 0; }
+  .main { margin-left: 0; padding: 18px 12px; }
+  .topbar { align-items: flex-start; }
+  h1 { font-size: 23px; }
+  .admin { display: none; }
+  .hero { padding: 21px; }
+  .hero h2 { font-size: 20px; }
+  .panel { padding: 15px; }
+  .panel-heading { align-items: flex-start; flex-direction: column; }
+}
+@media(max-width:450px) {
+  .stats { gap: 9px; }
+  .stat { padding: 13px; }
+  .stat strong { font-size: 23px; }
+  .toolbar, .form-grid {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+  .filter { width: 100%; }
+  .full { grid-column: auto; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">O</div>
+    <div><strong>ORVBA</strong><small>ADMIN CONTROL CENTER</small></div>
+  </div>
+
+  <div class="nav-heading">WORKSPACE</div>
+  <nav class="nav">
+    <a href="dashboard.html">▦ Dashboard</a>
+    <a href="mechanics.html">♙ Mechanics</a>
+    <a class="active" href="services.html">⚙ Services & Pricing</a>
+    <a href="requests.html">▤ Service Requests</a>
+    <a href="charges.html">₹ Charge Review</a>
+    <a href="#" onclick="logout();return false">↪ Logout</a>
+  </nav>
+
+  <div class="sidebar-note">
+    <strong>Fair service. Safer journeys.</strong>
+    Manage official services and keep pricing transparent.
+  </div>
+</aside>
+
+<main class="main">
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Admin workspace / Catalogue</div>
+      <h1>Services & Pricing</h1>
+    </div>
+    <div class="admin">Administrator · System admin</div>
+  </header>
+
+  <section class="hero">
+    <h2>Keep every service clear and fairly priced.</h2>
+    <p>Manage the services available through ORVBA. Set a standard price and a maximum allowed price to help keep roadside assistance charges transparent.</p>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-label">Total services</div>
+      <strong id="totalCount">—</strong>
+      <small>Saved in the database</small>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Average standard price</div>
+      <strong id="averagePrice">—</strong>
+      <small>Across all listed services</small>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Average diagnosis fee</div>
+      <strong id="averageDiagnosisFee">—</strong>
+      <small>Across all listed services</small>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-heading">
+      <div>
+        <h3>Service catalogue</h3>
+        <div class="sub">Add, edit, search and manage official service prices.</div>
+      </div>
+      <button class="btn primary" type="button" onclick="openAddModal()">＋ Add service</button>
+    </div>
+
+    <div class="toolbar">
+      <input id="searchInput" class="field search" placeholder="Search services..." aria-label="Search services">
+      <button class="btn outline" type="button" id="refreshButton">Refresh</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Diagnosis fee</th>
+            <th>Standard price</th>
+            <th>Maximum price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="servicesBody">
+          <tr><td colspan="5" class="empty">Loading services from the database...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Pricing policy:</strong> The standard price is the expected base price. The maximum allowed price is the upper limit before a quotation requires admin review. Diagnosis fees are managed separately.
+    </div>
+  </section>
+</main>
+
+<div class="modal-bg" id="serviceModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h3 id="modalTitle">Add service</h3>
+        <div class="sub">Enter the service name and pricing details.</div>
+      </div>
+      <button class="close" type="button" onclick="closeModal()" aria-label="Close">×</button>
+    </div>
+
+    <form id="serviceForm">
+      <input type="hidden" id="serviceId">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label for="serviceName">Service name *</label>
+          <input class="field" id="serviceName" required maxlength="100" placeholder="e.g. Battery jump-start">
+        </div>
+        <div class="form-group">
+          <label for="diagnosisFee">Diagnosis fee (₹) *</label>
+          <input class="field" id="diagnosisFee" type="number" min="0" step="0.01" required placeholder="e.g. 150">
+        </div>
+        <div class="form-group">
+          <label for="standardPrice">Standard price (₹) *</label>
+          <input class="field" id="standardPrice" type="number" min="0" step="0.01" required placeholder="e.g. 450">
+        </div>
+        <div class="form-group full">
+          <label for="maxPrice">Maximum allowed price (₹) *</label>
+          <input class="field" id="maxPrice" type="number" min="0" step="0.01" required placeholder="e.g. 700">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn primary" id="saveButton" type="submit">Save service</button>
+        <button class="btn outline" type="button" onclick="closeModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const API_BASE_URL = "http://localhost:8080";
+const $ = id => document.getElementById(id);
+let services = [];
+let toastTimer;
+
+function getAdminToken() {
+  return sessionStorage.getItem("orvbaToken") || localStorage.getItem("orvbaToken");
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[char]));
+}
+
+function formatPrice(value) {
+  const amount = Number(value);
+  return Number.isFinite(amount)
+    ? "₹" + amount.toLocaleString("en-IN", { maximumFractionDigits: 2 })
+    : "—";
+}
+
+async function adminFetch(endpoint, options = {}) {
+  const token = getAdminToken();
+  if (!token) {
+    throw new Error("Admin login token was not found. Please log in again.");
+  }
+
+  const headers = {
+    "Authorization": `Bearer ${token}`,
+    ...(options.body ? { "Content-Type": "application/json" } : {}),
+    ...(options.headers || {})
+  };
+
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...options,
+    headers
+  });
+
+  if (!response.ok) {
+    let message = `Request failed (${response.status})`;
+    try {
+      const body = await response.text();
+      if (body) message = body;
+    } catch (_) {}
+    if (response.status === 401 || response.status === 403) {
+      message = response.status === 403
+        ? "Access denied. Please make sure you are logged in with an ADMIN account."
+        : "Your login session has expired. Please log in again.";
+    }
+    throw new Error(message);
+  }
+
+  if (response.status === 204) return null;
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
+}
+
+function normalizeService(service) {
+  return {
+    id: service.serviceId,
+    name: service.serviceName ?? "",
+    diagnosisFee: service.diagnosisFee,
+    standardPrice: service.standardPrice,
+    maxAllowedPrice: service.maxAllowedPrice
+  };
+}
+
+async function loadServices() {
+  const body = $("servicesBody");
+  body.innerHTML = '<tr><td colspan="5" class="empty">Loading services from the database...</td></tr>';
+  $("refreshButton").disabled = true;
+  try {
+    const data = await adminFetch("/admin/services");
+    if (!Array.isArray(data)) {
+      throw new Error("The services endpoint did not return a list. Check GET /admin/services.");
+    }
+    services = data.map(normalizeService);
+    renderServices();
+  } catch (error) {
+    body.innerHTML = `<tr><td colspan="5" class="empty">${escapeHTML(error.message)}</td></tr>`;
+    updateStatistics();
+    showToast(error.message);
+  } finally {
+    $("refreshButton").disabled = false;
+  }
+}
+
+function renderServices() {
+  const query = $("searchInput").value.trim().toLowerCase();
+  const filtered = services.filter(service => service.name.toLowerCase().includes(query));
+
+  $("servicesBody").innerHTML = filtered.length
+    ? filtered.map(service => `
+      <tr>
+        <td><div class="service-name">${escapeHTML(service.name)}</div><div class="service-category">Service ID: ${escapeHTML(service.id)}</div></td>
+        <td class="price">${formatPrice(service.diagnosisFee)}</td>
+        <td class="price">${formatPrice(service.standardPrice)}</td>
+        <td class="price">${formatPrice(service.maxAllowedPrice)}</td>
+        <td><div class="actions"><button class="action-btn" type="button" onclick="editService(${Number(service.id)})">Edit</button></div></td>
+      </tr>`).join("")
+    : '<tr><td colspan="5" class="empty">No services found.</td></tr>';
+
+  updateStatistics();
+}
+
+function updateStatistics() {
+  $("totalCount").textContent = services.length;
+  const averageStandard = services.length
+    ? services.reduce((sum, service) => sum + Number(service.standardPrice || 0), 0) / services.length
+    : null;
+  const averageDiagnosis = services.length
+    ? services.reduce((sum, service) => sum + Number(service.diagnosisFee || 0), 0) / services.length
+    : null;
+  $("averagePrice").textContent = averageStandard === null ? "—" : formatPrice(Math.round(averageStandard * 100) / 100);
+  $("averageDiagnosisFee").textContent = averageDiagnosis === null ? "—" : formatPrice(Math.round(averageDiagnosis * 100) / 100);
+}
+
+function openAddModal() {
+  $("serviceForm").reset();
+  $("serviceId").value = "";
+  $("modalTitle").textContent = "Add service";
+  $("saveButton").textContent = "Save service";
+  $("serviceModal").classList.add("show");
+  $("serviceName").focus();
+}
+
+function closeModal() {
+  $("serviceModal").classList.remove("show");
+}
+
+function editService(id) {
+  const service = services.find(item => Number(item.id) === Number(id));
+  if (!service) {
+    showToast("Service not found. Refresh the catalogue and try again.");
+    return;
+  }
+  $("serviceId").value = service.id;
+  $("serviceName").value = service.name;
+  $("diagnosisFee").value = service.diagnosisFee ?? "";
+  $("standardPrice").value = service.standardPrice ?? "";
+  $("maxPrice").value = service.maxAllowedPrice ?? "";
+  $("modalTitle").textContent = "Edit service";
+  $("saveButton").textContent = "Update service";
+  $("serviceModal").classList.add("show");
+}
+
+$("serviceForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const standardPrice = Number($("standardPrice").value);
+  const maxAllowedPrice = Number($("maxPrice").value);
+  const diagnosisFee = Number($("diagnosisFee").value);
+  const serviceName = $("serviceName").value.trim();
+
+  if (!serviceName) {
+    showToast("Please enter a service name.");
+    return;
+  }
+  if (![standardPrice, maxAllowedPrice, diagnosisFee].every(Number.isFinite)
+      || standardPrice < 0 || diagnosisFee < 0 || maxAllowedPrice < standardPrice) {
+    showToast("Enter valid non-negative prices. Maximum price must be at least the standard price.");
+    return;
+  }
+
+  const serviceId = $("serviceId").value;
+  const payload = { serviceName, standardPrice, maxAllowedPrice, diagnosisFee };
+  const saveButton = $("saveButton");
+  saveButton.disabled = true;
+  saveButton.textContent = serviceId ? "Updating..." : "Saving...";
+
+  try {
+    const endpoint = serviceId
+      ? `/admin/services/${encodeURIComponent(serviceId)}`
+      : "/admin/services";
+    const method = serviceId ? "PUT" : "POST";
+    await adminFetch(endpoint, { method, body: JSON.stringify(payload) });
+    closeModal();
+    showToast(serviceId ? "Service updated successfully." : "Service created successfully.");
+    await loadServices();
+  } catch (error) {
+    showToast(error.message);
+  } finally {
+    saveButton.disabled = false;
+    saveButton.textContent = $("serviceId").value ? "Update service" : "Save service";
+  }
+});
+
+$("searchInput").addEventListener("input", renderServices);
+$("refreshButton").addEventListener("click", loadServices);
+$("serviceModal").addEventListener("click", event => {
+  if (event.target === $("serviceModal")) closeModal();
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeModal();
+});
+
+function showToast(message) {
+  const toast = $("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 3500);
+}
+
+function logout() {
+  ["orvbaToken", "orvbaUsername", "username"].forEach(key => {
+    sessionStorage.removeItem(key);
+    localStorage.removeItem(key);
+  });
+  window.location.href = "../login.html";
+}
+
+loadServices();
+</script>
+</body>
+</html>

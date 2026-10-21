@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f8ff">
+
+    <title>Request Assistance | ORVBA</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="request.css">
+    <script src="request.js" defer></script>
+
+
+</head>
+
+<body class="request-page">
+
+    <header class="request-nav">
+        <a href="dashboard.html" class="request-brand">
+            <div class="request-brand-mark" aria-hidden="true">O</div>
+            <div>
+                <div class="request-brand-name">ORV<span>BA</span></div>
+                <div class="request-brand-subtitle">ROADSIDE ASSISTANCE</div>
+            </div>
+        </a>
+
+        <a href="dashboard.html" class="nav-back">← Back to dashboard</a>
+    </header>
+
+    <main class="request-main">
+
+        <section class="request-intro">
+            <span class="intro-label">REQUEST ASSISTANCE</span>
+            <h1>Stranded? Let's get you<br><span>back on the road.</span></h1>
+            <p>
+                Tell us what's happening, share your location, and we'll
+                help connect you with an available mechanic near you.
+            </p>
+        </section>
+
+        <div class="booking-layout">
+
+            <section class="request-card">
+
+                <div class="card-heading">
+                    <div class="heading-icon" aria-hidden="true">＋</div>
+                    <div>
+                        <h2>Create a service request</h2>
+                        <p>Provide your vehicle details and describe the issue.</p>
+                    </div>
+                </div>
+
+                <div class="step-list" aria-label="Request steps">
+                    <div class="step active">
+                        <span class="step-number">1</span>
+                        <span>Vehicle</span>
+                    </div>
+                    <span class="step-line"></span>
+                    <div class="step active">
+                        <span class="step-number">2</span>
+                        <span>Problem</span>
+                    </div>
+                    <span class="step-line"></span>
+                    <div class="step active">
+                        <span class="step-number">3</span>
+                        <span>Location</span>
+                    </div>
+                </div>
+
+                <form id="requestForm">
+
+                    <section class="form-section">
+                        <h3 class="section-title">
+                            <span>01</span> Vehicle information
+                        </h3>
+
+                        <div class="field-grid">
+                          
+<div class="field">
+    <label for="vehicleId">Select Your Vehicle *</label>
+    <select id="vehicleId" name="vehicleId" required>
+        <option value="">Loading your vehicles...</option>
+    </select>
+    <small>Choose a vehicle registered to your account.</small>
+</div>
+
+<div class="field">
+    <label for="serviceId">Select Required Service *</label>
+    <select id="serviceId" name="serviceId" required>
+        <option value="">Loading available services...</option>
+    </select>
+    <small>Select the type of assistance you need.</small>
+</div>
+
+                        </div>
+                    </section>
+
+                    <section class="form-section">
+                        <h3 class="section-title">
+                            <span>02</span> Breakdown details
+                        </h3>
+
+                        <div class="field-grid">
+                            <div class="field full-width">
+                                <label for="problemDescription">
+                                    Describe the problem
+                                    <span class="required">*</span>
+                                </label>
+                                <textarea id="problemDescription"
+                                          name="problemDescription"
+                                          minlength="5" maxlength="1000"
+                                          placeholder="Example: My bike stopped suddenly and won't start. I can hear a clicking sound when I try to start it."
+                                          required></textarea>
+                                <small class="field-help">
+                                    Include symptoms and any warning lights you noticed.
+                                </small>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="form-section">
+                        <h3 class="section-title">
+                            <span>03</span> Your current location
+                        </h3>
+
+                        <div class="location-box">
+                            <div class="location-copy">
+                                <div class="location-symbol" aria-hidden="true">⌖</div>
+                                <div>
+                                    <strong>Share your location</strong>
+                                    <p>
+                                        Allow location access so ORVBA can search
+                                        for nearby mechanics.
+                                    </p>
+                                    <p class="location-status" id="locationStatus"
+                                       aria-live="polite">
+                                        Location not selected yet.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button type="button" class="uv-button secondary"
+                                    id="getLocationButton">
+                                <span class="uv-button-inner">
+                                    Use my location <span class="arrow">→</span>
+                                </span>
+                            </button>
+                        </div>
+
+                        <div class="location-meta">
+                            <span>Location used for mechanic matching</span>
+                            <span>Coordinates sent securely over your API connection</span>
+                        </div>
+
+                        <div class="coordinate-fields" style="margin-top: 17px;">
+                            <div class="field">
+                                <label for="latitude">Latitude</label>
+                                <input type="number" id="latitude" name="latitude"
+                                       step="any" placeholder="Auto-filled from GPS"
+                                       required>
+                            </div>
+
+                            <div class="field">
+                                <label for="longitude">Longitude</label>
+                                <input type="number" id="longitude" name="longitude"
+                                       step="any" placeholder="Auto-filled from GPS"
+                                       required>
+                            </div>
+                        </div>
+<!-- 
+                        <small class="field-help">
+                            You can also enter coordinates manually if GPS is unavailable.
+                        </small> -->
+                    </section>
+
+                    <div class="price-note">
+                        <div class="price-note-icon" aria-hidden="true">₹</div>
+                        <div>
+                            <strong>Transparent service charges</strong>
+                            <p>
+                                The displayed estimate is indicative. The mechanic
+                                will diagnose the issue and submit a repair quotation.
+                                If the quotation exceeds the configured limit, admin
+                                review is required. The diagnosis fee remains payable
+                                if you reject the quotation.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="requestMessage" class="form-message"
+                         role="status" aria-live="polite"></div>
+
+                    <div class="request-actions">
+                        <button type="submit" class="uv-button primary" id="submitRequest">
+                            <span class="uv-button-inner">
+                                <span id="submitText">Find nearby assistance</span>
+                                <span class="arrow" aria-hidden="true">→</span>
+                            </span>
+                        </button>
+
+                        <p class="disclaimer">
+                            By submitting, you confirm that the details and location
+                            provided are accurate.
+                        </p>
+                    </div>
+
+                </form>
+            </section>
+
+            <aside class="assistance-card">
+                <div class="side-visual" aria-hidden="true">
+                    <span class="car-symbol">⌁</span>
+                </div>
+
+                <span class="side-kicker">YOUR ROAD. YOUR SAFETY.</span>
+                <h2>Help is closer than you think.</h2>
+                <p class="side-description">
+                    ORVBA helps connect you with mechanics when your journey
+                    doesn't go as planned.
+                </p>
+
+                <ul class="benefit-list">
+                    <li>
+                        <span class="benefit-check">✓</span>
+                        <div>
+                            <strong>Nearby mechanics</strong>
+                            <p>Find assistance based on your location.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="benefit-check">✓</span>
+                        <div>
+                            <strong>Quotation before repair</strong>
+                            <p>Review the repair quotation before approving work.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="benefit-check">✓</span>
+                        <div>
+                            <strong>Track the request</strong>
+                            <p>Follow the request as its status changes.</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="support-note">
+                    <span aria-hidden="true">✦</span>
+                    <p>Stay calm. Share accurate details. We'll help you take the next step.</p>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <footer class="request-footer">
+        <span>© <span id="currentYear"></span> ORVBA</span>
+        <span>SECURE · RELIABLE · HERE TO HELP</span>
+    </footer>
+
+
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ORVBA Application",
+            "request": "launch",
+            "mainClass": "com.orvba.app.AppApplication",
+            "projectName": "app"
+        }
+    ]
+}

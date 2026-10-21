@@ -1,0 +1,490 @@
+  /* ---------- GENERAL ---------- */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f7f9fc;
+            color: #172b4d;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* ---------- NAVBAR ---------- */
+
+        .navbar {
+            min-height: 76px;
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid #e6edf5;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #172b4d;
+        }
+
+        .logo span {
+            color: #269dd8;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: #53647b;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #168dc8;
+        }
+
+        .logout-btn {
+            padding: 10px 18px;
+            background: #edf5fc;
+            color: #17365d !important;
+
+            border: 1px solid #d8e7f5;
+            border-radius: 10px;
+
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #dcecf9;
+        }
+
+        /* ---------- MAIN CONTAINER ---------- */
+
+        .container {
+            width: 86%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* ---------- WELCOME SECTION ---------- */
+
+        .welcome {
+            margin-top: 38px;
+            padding: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+
+            background: linear-gradient(
+                120deg,
+                #e9f4fc,
+                #f0f4fc,
+                #f4f5fb
+            );
+
+            border: 1px solid #e0eaf5;
+            border-radius: 24px;
+        }
+
+        .welcome-content {
+            max-width: 650px;
+        }
+
+        .welcome-label {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 13px;
+
+            background: #ffffff;
+            color: #208bc2;
+
+            border: 1px solid #e0edf8;
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .welcome h1 {
+            margin-bottom: 17px;
+
+            font-size: 38px;
+            line-height: 1.3;
+            color: #172b4d;
+        }
+
+        .welcome h1 span {
+            color: #208bc2;
+        }
+
+        .welcome p {
+            max-width: 540px;
+            margin-bottom: 27px;
+
+            color: #65758b;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .welcome-icon {
+            width: 175px;
+            height: 175px;
+            min-width: 175px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid #ffffff;
+            border-radius: 50%;
+
+            font-size: 75px;
+        }
+
+        /* ---------- UIVERSE-INSPIRED BUTTON ---------- */
+
+        .button-wrap {
+            display: inline-block;
+        }
+
+        .gradient-button {
+            position: relative;
+            display: inline-block;
+
+            padding: 2px;
+            border: none;
+            border-radius: 12px;
+
+            background: #172b4d;
+            color: #ffffff;
+
+            cursor: pointer;
+            overflow: hidden;
+
+            box-shadow: 0 5px 15px rgba(23, 43, 77, 0.12);
+
+            transition: transform 0.3s ease;
+        }
+
+        .gradient-button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            border-radius: 12px;
+
+            background: linear-gradient(
+                100deg,
+                #28d7db,
+                #328ff0,
+                #8869ee
+            );
+
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .gradient-button:hover::before {
+            opacity: 1;
+        }
+
+        .gradient-button:hover {
+            transform: scale(1.04);
+        }
+
+        .gradient-button:active {
+            transform: scale(0.97);
+        }
+
+        .button-inner {
+            position: relative;
+            z-index: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 13px 22px;
+
+            background: #172b4d;
+            color: #ffffff;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .button-arrow {
+            font-size: 19px;
+            transition: transform 0.3s ease;
+        }
+
+        .gradient-button:hover .button-arrow {
+            transform: translateX(4px);
+        }
+
+        /* ---------- SECTION HEADING ---------- */
+
+        .section-heading {
+            margin-top: 45px;
+            margin-bottom: 23px;
+        }
+
+        .section-heading h2 {
+            margin-bottom: 9px;
+
+            color: #172b4d;
+            font-size: 24px;
+        }
+
+        .section-heading p {
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* ---------- DASHBOARD CARDS ---------- */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            min-height: 285px;
+            padding: 27px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            background: #ffffff;
+            border: 1px solid #e5ebf3;
+            border-radius: 19px;
+
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #cbdff2;
+
+            box-shadow: 0 12px 28px rgba(23, 43, 77, 0.06);
+        }
+
+        .card-icon {
+            width: 53px;
+            height: 53px;
+            margin-bottom: 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+            font-size: 25px;
+        }
+
+        .blue-icon {
+            background: #e6f3fc;
+        }
+
+        .cyan-icon {
+            background: #e4f8f8;
+        }
+
+        .purple-icon {
+            background: #f0ebfc;
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+
+            color: #203653;
+            font-size: 18px;
+        }
+
+        .card p {
+            margin-bottom: 24px;
+
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.8;
+
+            flex-grow: 1;
+        }
+
+        /* ---------- PREVIOUS HISTORY ---------- */
+
+        .history {
+            margin-top: 35px;
+            margin-bottom: 50px;
+            padding: 28px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+
+            background: #ffffff;
+            border: 1px solid #e5ebf3;
+            border-radius: 19px;
+        }
+
+        .history h3 {
+            margin-bottom: 10px;
+
+            color: #203653;
+            font-size: 19px;
+        }
+
+        .history p {
+            max-width: 600px;
+
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .history-status {
+            display: inline-block;
+            margin-top: 13px;
+            padding: 7px 12px;
+
+            background: #e8f5ed;
+            color: #43815a;
+
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            padding: 25px 7%;
+
+            background: #ffffff;
+            border-top: 1px solid #e6edf5;
+
+            text-align: center;
+            color: #8190a3;
+            font-size: 13px;
+        }
+
+        footer span {
+            color: #208bc2;
+            font-weight: bold;
+        }
+
+        /* ---------- RESPONSIVE DESIGN ---------- */
+
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .welcome h1 {
+                font-size: 32px;
+            }
+
+            .welcome-icon {
+                width: 135px;
+                height: 135px;
+                min-width: 135px;
+                font-size: 60px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 17px 5%;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .nav-links {
+                gap: 13px;
+                flex-wrap: wrap;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .logout-btn {
+                padding: 8px 11px;
+            }
+
+            .container {
+                width: 90%;
+            }
+
+            .welcome {
+                margin-top: 25px;
+                padding: 28px 23px;
+            }
+
+            .welcome h1 {
+                font-size: 28px;
+            }
+
+            .welcome p {
+                font-size: 14px;
+            }
+
+            .welcome-icon {
+                display: none;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                min-height: 255px;
+            }
+
+            .history {
+                padding: 23px;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .section-heading h2 {
+                font-size: 22px;
+            }
+        }
